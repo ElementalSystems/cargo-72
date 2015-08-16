@@ -65,8 +65,8 @@ var landDiv=null;
 
 function tick(timestamp)
 {
-	var xpos=pingPongRange(0,-3000,timestamp,240000)
-	var ypos=pingPongRange(0,-30,timestamp,10000)
+	var xpos=pingPongRange(0,-50,timestamp,10000)
+	var ypos=pingPongRange(0,-30,timestamp,30000)
 	
 	landDiv.style.left=xpos+"em";
 	landDiv.style.top=ypos+"em";
@@ -75,7 +75,7 @@ function tick(timestamp)
 
 window['fOL']=function fOL()
 {
-   landDiv=makeTerrain(5000,70);
+   landDiv=makeTerrain(100,70);
    document.getElementById('iGS').appendChild(landDiv);  
    window.requestAnimationFrame(tick);
 }
