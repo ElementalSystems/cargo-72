@@ -7,22 +7,19 @@
   bottom:0;
   left: 0;
   right:0;
-  xoverflow: hidden;
+  overflow: hidden;
   font-size: 10pt;
-  line-height:90%;
-  letter-spacing: -0.15em;
   
 }
 
 #iMM {
     position: absolute;
-    visibility: hidden;   
+    top:-1000em;
 }
 
 /*
   Primary Terrain Definitions
 */
 div.cPT {
-  xbackground: #500;
   position: absolute;  
 }
