@@ -1,1 +1,5 @@
---compilation_level ADVANCED --js cargo.js --js util.js --js_output_file cc.js
+--compilation_level ADVANCED 
+--js cargo.js 
+--js util.js 
+--js decks.js 
+--js_output_file cc.js

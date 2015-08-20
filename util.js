@@ -34,3 +34,20 @@ function setElementClass(e,cls,set)
 	e.classList.remove(cls);	
 }
   
+ function createDeck(source)
+ {
+	var result={}; //make a copy
+	result.source=source;
+	result.current=[];
+	result.isEmpty=function() { return !this.current.length; }
+	result.next=function() {
+		if (this.isEmpty()) this.current=this.source.slice();			
+        return result.current.shift();			
+	}
+	result.draw=function() {
+		if (this.isEmpty()) this.current=this.source.slice();			
+        var n=randomInt(0,this.current.length-1);
+		return result.current.splice(n,1)[0];			
+	}	
+	return result;
+ }
