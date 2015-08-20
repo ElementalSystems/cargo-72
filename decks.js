@@ -16,7 +16,7 @@ var sampleLevel={
 	  },
 	  {
 		  set: [tC.up,tC.down,tC.cliffdown,tC.cliffup,tC.level,tC.level,tC.level,tC.level,tC.level,tC.rough],
-		  distance: 400
+		  distance: 4000
 	  },
 	  {
 		  set: [tC.down,tC.down,tC.down,tC.down,tC.down, tC.level,tC.level]
