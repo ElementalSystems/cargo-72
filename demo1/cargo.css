@@ -1,0 +1,26 @@
+/*
+  Game Space pre
+*/
+#iGS {
+  position: absolute;
+  top:0;
+  bottom:0;
+  left: 0;
+  right:0;
+  overflow: hidden;
+  font-size: 15pt;
+  background: #55A;  
+}
+
+#iMM {
+    position: absolute;
+    top:-1000em;
+}
+
+/*
+  Primary Terrain Definitions
+*/
+div.cPT {
+  position: absolute;  
+  bottom: 1000%;
+}
