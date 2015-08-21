@@ -182,10 +182,21 @@ function createGame(level)
 }
 
 
+function getAltitude(x)
+{
+	//get the main altitude
+	var xmain=Math.floor(x);
+	//establish how far across this block we are looking
+	var xfrac=x-xmain;
+	var hm=gS.heightMap[xmain];	
+	return hm.altitude+(1-xfrac)*hm.leftAF+xfrac*hm.rightAF;
+}
+
 function tick(timestamp)
 {
-	gS.xOffset=pingPongRange(0,-3000,timestamp,240000)
-	gS.yOffset=pingPongRange(0,-10,timestamp,10000)
+	gS.xOffset=pingPongRange(0,-3000,timestamp,240000);
+	gS.yOffset=-getAltitude(30-gS.xOffset)+10;
+	
 	positionActiveList();  
     //if we have moved 80% of our safety margin	on making objects active then we needs to have a look
 	if (Math.abs(gS.xOffset-gS.lastPassiveXOffset)>gS.passiveSafetyMargin*.8)
