@@ -1,5 +1,9 @@
 --compilation_level ADVANCED 
 --js cargo.js 
+--js art.js 
 --js util.js 
 --js decks.js 
+--js terrain.js 
+--js asciiart.js 
+--js avatar.js 
 --js_output_file cc.js

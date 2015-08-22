@@ -18,9 +18,35 @@
 }
 
 /*
+  Game Object Definitions
+*/
+div.cGO {
+  position: absolute;  
+  bottom:1000%
+}
+
+
+/*
   Primary Terrain Definitions
 */
 div.cPT {
-  position: absolute;  
-  bottom: 1000%;
+
+}
+
+/*the Avatar Buggy*/
+div.cAB { 
+  font-size:7pt;
+  color: #FFF;
+  transform-origin: 0% 100%;
+  transform: rotate(-20deg);
+}
+
+
+/*the Avatar wheels*/
+div.cAW { 
+  font-size:5pt;
+  color: #000;
+  background:#555;
+  transform-origin: 50% 50%;
+  
 }

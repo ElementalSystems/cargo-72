@@ -1,109 +1,17 @@
 
 var gS=document.getElementById('iGS');
-//Measure the display
 	
-
-
-
-function addSimpleTerrain(symbolList,width,add)
-{
-  for (var i=0;i<width;i+=1) {
-	  var sym=symbolList.charAt(randomInt(0,symbolList.length-1));
-	  addTerrainBlock(sym);
-  }
-  if (add) createTerrainObject();  
-}
-
-
-//this guy creates and adds an object corresponding to the terrain that has been generated wil addTerrainBlock
-function createTerrainObject()
-{
-  //add an extra 10 on the bottom
-  gS.terrainAltMin-=20;
-  var height=Math.floor(gS.terrainAltMax-gS.terrainAltMin+1);
-  var el=document.createElement('DIV');
-  var width=gS.terrainEnd-gS.terrainStart;
-  setElementClass(el,'cGO',true);
-  setElementClass(el,'cPT',true);
-  	
-  el.rowText=[];
-  
-  for (var i=0;i<height;i+=1) { //fill in these rows
-	  el.rowText[i]='';
-	  for (var j=0;j<width;j+=1) {
-		var alt=gS.heightMap[j+gS.terrainStart].altitude-gS.terrainAltMin;
-		if (i==alt) el.rowText[i]+=gS.heightMap[j+gS.terrainStart].symbol;
-		else if (i<alt) el.rowText[i]+='#';
-		else el.rowText[i]+=' ';		
-	  }
-  }
-  
-  el.posLeft=gS.terrainStart;
-  el.posRight=gS.terrainEnd;
-  el.posBottom=gS.terrainAltMin;
-  el.posTop=gS.terrainAltMin+height;
-  
-  
-  //finally build out the html
-  var html="";
-  for (var i=height-1;i>=0;i-=1) { //add divs for each row
-    html+="<div>"+stringForHtml(el.rowText[i])+"</div>";
-  }	      
-  
-  el.innerHTML=html;
-  
-  createGameObject(el);  
-  
-  //reset the control for this stuff
-  gS.terrainStart=gS.terrainEnd;  
-  gS.terrainAltStart=gS.terrainAlt;
-  gS.terrainAltMax=-99999;
-  gS.terrainAltMin=99999;	
-}
-
-function offsetTerrain(yoff)
-{
-	gS.terrainAlt+=yoff;
-}
-
-function addTerrainBlock(symbolgiven)
-{
-   var  val={
-		  leftAF:0,
-		  rightAF:0,
-		  symbol: symbolgiven		  
-	    };
-		
-   switch (val.symbol) {
-	   case '\\': val.leftAF=1; break;
-	   case '/': val.rightAF=1; break;	   	   
-   }
-
-   gS.terrainAlt-=val.leftAF;
-   val.altitude=gS.terrainAlt;
-   if (gS.terrainAlt>gS.terrainAltMax) gS.terrainAltMax=gS.terrainAlt;
-   if (gS.terrainAlt<gS.terrainAltMin) gS.terrainAltMin=gS.terrainAlt;   
-   gS.terrainAlt+=val.rightAF;      
-   
-   gS.heightMap[gS.terrainEnd]=val;
-   gS.terrainEnd+=1;
-}
-
-
-
 function createGameObject(el)
 {
 	//add it to the passive object list
 	gS.passiveList.push(el);	
+	return el;
 }
 
-function positionActiveList()
+function positionGameObject(el)
 {
-	for (var i=0;i<gS.activeList.length;i+=1) {
-	  var el=gS.activeList[i];
-	  el.style.bottom=((el.posBottom+gS.yOffset)*gS.textHeight)+"px";
-	  el.style.left=((el.posLeft+gS.xOffset)*gS.textWidth)+"px";	  
-	}
+  el.style.bottom=((el.posBottom+gS.yOffset)*gS.textHeight)+"px";
+  el.style.left=((el.posLeft+gS.xOffset)*gS.textWidth)+"px";	  
 }
 
 function examinePassiveList() 
@@ -159,7 +67,7 @@ function createGame(level)
 	gS.terrainAltMin=99999;
 	gS.lastPassiveXOffset=100000;
 	gS.passiveSafetyMargin=30;
-	
+	gS.gameStartTime=0;
 	   
 	
 	//now do each section of the content
@@ -184,6 +92,7 @@ function createGame(level)
 
 function getAltitude(x)
 {
+	if (x<0) return 0;
 	//get the main altitude
 	var xmain=Math.floor(x);
 	//establish how far across this block we are looking
@@ -194,13 +103,36 @@ function getAltitude(x)
 
 function tick(timestamp)
 {
-	gS.xOffset=pingPongRange(0,-3000,timestamp,240000);
-	gS.yOffset=-getAltitude(30-gS.xOffset)+10;
+	//lets work out the times
+	if (!gS.gameStartTime) {
+		gS.gameStartTime=timestamp;
+		gS.frameTime=100;
+	} else gS.frameTime=timestamp-gS.lastFrameStart;
+	gS.LastFrameStart=timestamp;
+	gS.gameTime=timestamp-gS.gameStartTime;
 	
-	positionActiveList();  
+	
+	//tick for active elements
+	for (var i=0;i<gS.activeList.length;i+=1) 
+	  gS.activeList[i].tick();
+  
+    //figure out the camera
+    if (gS.avatar) {
+	   gS.xOffset=-gS.avatar.posLeft+20;	   
+	   gS.yOffset=-gS.avatar.posBottom+10;	
+	} else 
+	   gS.xOffset=0;
+	
+    //position active elements
+	for (var i=0;i<gS.activeList.length;i+=1) 
+	  positionGameObject(gS.activeList[i]);
+     
+	
+	
     //if we have moved 80% of our safety margin	on making objects active then we needs to have a look
 	if (Math.abs(gS.xOffset-gS.lastPassiveXOffset)>gS.passiveSafetyMargin*.8)
 	  examinePassiveList();
+      
 	window.requestAnimationFrame(tick);
 }
 
@@ -210,6 +142,7 @@ window['fOL']=function fOL()
    var e=document.getElementById('iMM');
    gS.textWidth=e.clientWidth;
    gS.textHeight=e.clientHeight;
+   gS.textRatio=gS.textHeight/gS.textWidth;
    gS.widthInText=gS.offsetWidth/gS.textWidth;
 	
    createGame(sampleLevel);
