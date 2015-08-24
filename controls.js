@@ -17,4 +17,5 @@ var controls={
 function bindControls(el) {
   el.onkeydown=function(evt) { controls.keyEvent(evt.keyCode,1);  };
   el.onkeyup=function(evt) { controls.keyEvent(evt.keyCode,0);  };
+  el.focus();
 }
