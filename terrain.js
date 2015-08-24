@@ -1,7 +1,7 @@
 function addSimpleTerrain(symbolList,width,add)
 {
   for (var i=0;i<width;i+=1) {
-	  var sym=symbolList.charAt(randomInt(0,symbolList.length-1));
+	  var sym=symbolList.charAt(i%(symbolList.length-1));
 	  addTerrainBlock(sym);
   }
   if (add) createTerrainObject();  
@@ -45,7 +45,7 @@ function createTerrainObject()
   
   el.innerHTML=html;
   el.tick=terrainTick;
-  
+  decorateArt(el,aS.terrain);
   createGameObject(el);  
   
   //reset the control for this stuff
@@ -71,13 +71,15 @@ function addTerrainBlock(symbolgiven)
    switch (val.symbol) {
 	   case '\\': val.leftAF=1; break;
 	   case '/': val.rightAF=1; break;	   	   
+	   case ':': val.leftAF=val.rightAF=.4;
+	   case ',': val.leftAF=val.rightAF=0.2;	   
    }
 
-   gS.terrainAlt-=val.leftAF;
-   val.altitude=gS.terrainAlt;
+   gS.terrainAlt-=Math.floor(val.leftAF);
+   val.altitude=Math.floor(gS.terrainAlt);
    if (gS.terrainAlt>gS.terrainAltMax) gS.terrainAltMax=gS.terrainAlt;
    if (gS.terrainAlt<gS.terrainAltMin) gS.terrainAltMin=gS.terrainAlt;   
-   gS.terrainAlt+=val.rightAF;      
+   gS.terrainAlt+=Math.floor(val.rightAF);      
    
    gS.heightMap[gS.terrainEnd]=val;
    gS.terrainEnd+=1;
@@ -87,7 +89,7 @@ function addTerrainToAltitude(targetAlt,width)
 {
   for (var i=0;i<width;i+=1) {
 	var terrainDiff=targetAlt-gS.terrainAlt;
-	switch (randomInt(0,Math.abs(terrainDiff+5))) {
+	switch (randomInt(0,Math.abs(terrainDiff+6))) {
 	  case 0:
 	  case 1:
 	  case 2: 

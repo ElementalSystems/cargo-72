@@ -30,15 +30,24 @@ div.cGO {
   Primary Terrain Definitions
 */
 div.cPT {
-
+  color: #FF0;
 }
 
+
+span.cTS { /*terrain solid*/
+  background: #440;
+  color: #AA0;
+}
+
+span.cTD {/*terrain danger*/
+  color: #A00;
+}
 /*the Avatar Buggy*/
 div.cAB { 
   font-size:7pt;
   color: #FFF;
   transform-origin: 0% 100%;
-  transform: rotate(-20deg);
+  transform: rotate(0deg);
 }
 
 
@@ -46,7 +55,17 @@ div.cAB {
 div.cAW { 
   font-size:5pt;
   color: #000;
-  background:#555;
+  font-weight: bold;
   transform-origin: 50% 50%;
+  transform: rotate(1.232rad);
   
+}
+
+span.cWS{
+	background: #AAA;
+}
+
+span.cWH{
+	background: #000;
+	color: #FFF;
 }

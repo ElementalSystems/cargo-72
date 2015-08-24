@@ -1,3 +1,17 @@
+//Takes a div filled with other divs
+function decorateArt(el,style)
+{
+	var list=el.getElementsByTagName('DIV');
+	//act on every div (line) within this
+	for (var i=0;i<list.length;i+=1) {
+		var text=list[i].innerHTML;
+		//apply every transform to it
+		for (var j=0;j<style.length;j+=1)
+		  text=text.replace(new RegExp(style[j].pattern,'g'), function custom(x) { return "<span class="+style[j].cls+">"+x+"</span>";} );
+	    list[i].innerHTML=text;
+	}	
+	
+}
 
 function addSimpleArt(art,xOff,yOff)
 {
@@ -22,6 +36,7 @@ function addSimpleArt(art,xOff,yOff)
   el.posRight=el.posLeft+width; 
   el.posWidth=width;  
   el.innerHTML=html;
+  if (art.deco) decorateArt(el,art.deco);
   el.tick=terrainTick; 
   return createGameObject(el);    
   

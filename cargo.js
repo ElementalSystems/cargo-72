@@ -68,6 +68,10 @@ function createGame(level)
 	gS.lastPassiveXOffset=100000;
 	gS.passiveSafetyMargin=30;
 	gS.gameStartTime=0;
+	
+	gS.gravity=10;
+	gS.drag=1;
+	//bindControls(gS);
 	   
 	
 	//now do each section of the content
@@ -108,9 +112,8 @@ function tick(timestamp)
 		gS.gameStartTime=timestamp;
 		gS.frameTime=100;
 	} else gS.frameTime=timestamp-gS.lastFrameStart;
-	gS.LastFrameStart=timestamp;
-	gS.gameTime=timestamp-gS.gameStartTime;
-	
+	gS.lastFrameStart=timestamp;
+	gS.gameTime=timestamp-gS.gameStartTime;	
 	
 	//tick for active elements
 	for (var i=0;i<gS.activeList.length;i+=1) 
@@ -119,7 +122,7 @@ function tick(timestamp)
     //figure out the camera
     if (gS.avatar) {
 	   gS.xOffset=-gS.avatar.posLeft+20;	   
-	   gS.yOffset=-gS.avatar.posBottom+10;	
+	   gS.yOffset=-gS.avatar.posBottom+5;	
 	} else 
 	   gS.xOffset=0;
 	
