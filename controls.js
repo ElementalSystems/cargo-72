@@ -6,11 +6,11 @@ var controls={
 	keyList: [],
 	
 	keyEvent: function(keyCode,keyDown) {
-		this.keyList[keyCode]=keyDown;
+		controls.keyList[keyCode]=keyDown;
 	},
 		
 	isKeyDown: function(keyCode) {
-	    return this.keyList[keyCode];
+	    return controls.keyList[keyCode];
 	}	
 }
 

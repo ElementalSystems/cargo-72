@@ -71,7 +71,7 @@ function createGame(level)
 	
 	gS.gravity=10;
 	gS.drag=1;
-	//bindControls(gS);
+	bindControls(gS);
 	   
 	
 	//now do each section of the content

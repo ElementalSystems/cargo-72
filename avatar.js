@@ -18,11 +18,13 @@ function addBuggy()
 
 function avatarTick()
 {		
-	this.wheelPower=0;
-    if (controls.isKeyDown(68)) 
+    this.wheelPower=0;
+    
+	if (controls.isKeyDown(68)) 
 		this.wheelPower=30;
 	if (controls.isKeyDown(65)) 
 		this.wheelPower=-20;
+	
 	
 	
 	var fwxc=Math.cos(this.angle);
@@ -86,4 +88,5 @@ function avatarTick()
 	    this.wheels[i].posBottom=this.posBottom-fwxs*this.wheeloff[i]/gS.textRatio;
 		this.wheels[i].style.transform="rotate("+this.wheelRot+"rad)";	
 	}
+	
 }

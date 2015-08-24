@@ -1,0 +1,71 @@
+/*
+  Game Space pre
+*/
+#iGS {
+  position: absolute;
+  top:0;
+  bottom:0;
+  left: 0;
+  right:0;
+  overflow: hidden;
+  font-size: 15pt;
+  background: #55A;  
+}
+
+#iMM {
+    position: absolute;
+    top:-1000em;
+}
+
+/*
+  Game Object Definitions
+*/
+div.cGO {
+  position: absolute;  
+  bottom:1000%
+}
+
+
+/*
+  Primary Terrain Definitions
+*/
+div.cPT {
+  color: #FF0;
+}
+
+
+span.cTS { /*terrain solid*/
+  background: #440;
+  color: #AA0;
+}
+
+span.cTD {/*terrain danger*/
+  color: #A00;
+}
+/*the Avatar Buggy*/
+div.cAB { 
+  font-size:7pt;
+  color: #FFF;
+  transform-origin: 0% 100%;
+  transform: rotate(0deg);
+}
+
+
+/*the Avatar wheels*/
+div.cAW { 
+  font-size:5pt;
+  color: #000;
+  font-weight: bold;
+  transform-origin: 50% 50%;
+  transform: rotate(1.232rad);
+  
+}
+
+span.cWS{
+	background: #AAA;
+}
+
+span.cWH{
+	background: #000;
+	color: #FFF;
+}
