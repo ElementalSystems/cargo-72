@@ -15,9 +15,9 @@ var aW={
   },
   buggy_w: { 
 	  l:[ "  nnnnn  ",
-	      "/#######\\",
-		  "|##(O)##|",
-		  "\\#######/",
+	      " <#####>",
+		  "<##(O)##>",
+		  " <#####>",
 		  "  uuuuu  "
 		  ],
       cls: "cAW",
@@ -29,7 +29,15 @@ var aW={
 
 var aS={
   terrain:  [
+    { cls: "cPT"  },    
     { pattern: "#+", cls: "cTS" },
-	{ pattern: "[,:]+", cls: "cTD" }
+	{ pattern: "#+", replace_r: "@&#%$" },
+	{ pattern: "[!]+", cls: "cTD" }
+  ],
+  backdrop:  [
+    { cls: "cST" } ,
+	{ pFactor: .8 },    
+	{ pattern: "#+", replace_r: "  o .  ' , " }
+	
   ]
 };

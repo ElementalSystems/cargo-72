@@ -10,8 +10,8 @@ function createGameObject(el)
 
 function positionGameObject(el)
 {
-  el.style.bottom=((el.posBottom+gS.yOffset)*gS.textHeight)+"px";
-  el.style.left=((el.posLeft+gS.xOffset)*gS.textWidth)+"px";	  
+  el.style.bottom=((el.posBottom+gS.yOffset)*gS.textHeight*el.posPFactor)+"px";
+  el.style.left=((el.posLeft+gS.xOffset)*gS.textWidth*el.posPFactor)+"px";	  
 }
 
 function examinePassiveList() 
@@ -19,10 +19,11 @@ function examinePassiveList()
 	//go through the passive list and see what you want to upgrade
 	var transfer=[];
 	for (var i=0;i<gS.passiveList.length;i+=1) {
-		var xpos=gS.passiveList[i].posLeft;
-		if (((xpos+gS.xOffset)>(-gS.passiveSafetyMargin))&& //is it within margin of the left edge?
-		    ((xpos+gS.xOffset)<(gS.widthInText+gS.passiveSafetyMargin)))  //is within safety of the right edge
-			    transfer.push(gS.passiveList[i]);			
+		var el=gS.passiveList[i];
+		var xpos=(el.posLeft+gS.xOffset)*el.posPFactor;
+		if (((xpos+el.posWidth)>(-gS.passiveSafetyMargin))&& //is it within margin of the left edge?
+		    (xpos<(gS.widthInText+gS.passiveSafetyMargin)))  //is within safety of the right edge
+			    transfer.push(el);			
 	}      
 	//upgrade!
 	for (var i=0;i<transfer.length;i+=1) {
@@ -34,10 +35,11 @@ function examinePassiveList()
 	//go through the active list and collect who you want to downgrade
 	transfer=[];
 	for (var i=0;i<gS.activeList.length;i+=1) {
-		var xpos=gS.activeList[i].posLeft;		
-		if (((xpos+gS.xOffset)<(-gS.passiveSafetyMargin))|| //left of the left edge
-		    ((xpos+gS.xOffset)>(gS.widthInText+gS.passiveSafetyMargin)))  //right of the right edge
-			    transfer.push(gS.activeList[i]);			
+		var el=gS.activeList[i];
+		var xpos=(el.posLeft+gS.xOffset)*el.posPFactor;
+		if (((xpos+el.posWidth)<(-gS.passiveSafetyMargin))|| //left of the left edge
+		    (xpos>(gS.widthInText+gS.passiveSafetyMargin)))  //right of the right edge
+			    transfer.push(el);			
 	}
 	//downgrade!
 	for (var i=0;i<transfer.length;i+=1) {
@@ -54,7 +56,7 @@ function examinePassiveList()
 function createGame(level)
 {
 	//clear out the display space and buffers
-	gS.innerHTML='';
+	//gS.innerHTML='';
 	gS.activeList=[];
 	gS.passiveList=[];
 	gS.level=level;
@@ -69,8 +71,8 @@ function createGame(level)
 	gS.passiveSafetyMargin=30;
 	gS.gameStartTime=0;
 	
-	gS.gravity=10;
-	gS.drag=1;
+	gS.gravity=30;
+	gS.drag=5;
 	bindControls(gS);
 	   
 	
@@ -150,4 +152,10 @@ window['fOL']=function fOL()
 	
    createGame(sampleLevel);
    window.requestAnimationFrame(tick);   
+   addConsoleText("Unit CARGO-72 Online...");
+   addConsoleText("Internal Diagnostics: OKAY");
+   addConsoleText("Current Location: DIST-X42");
+   addConsoleText("Task: On Site Testing");
+   addConsoleText("Orders: Procede to Atmospheric Testing Ground");
+   
 }

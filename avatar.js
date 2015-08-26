@@ -13,7 +13,7 @@ function addBuggy()
 	el.wheelPower=0;
 	el.rotateSpeed=1.57; //radians per second 1.57 = 90 deg per second
 	el.traction=0;
-	el.wheelRot=0;
+	el.wheels[0].wheelRot=el.wheels[1].wheelRot=el.wheels[2].wheelRot=0;
 }
 
 function avatarTick()
@@ -21,17 +21,21 @@ function avatarTick()
     this.wheelPower=0;
     
 	if (controls.isKeyDown(68)) 
-		this.wheelPower=30;
+		this.wheelPower=100;
 	if (controls.isKeyDown(65)) 
-		this.wheelPower=-20;
-	
+		this.wheelPower=-80;
+	var startJump=controls.isKeyDown(32);
 	
 	
 	var fwxc=Math.cos(this.angle);
 	var fwxs=Math.sin(this.angle);
 	//so lets do physics
-	this.velX+=(this.wheelPower*this.traction*fwxc-gS.drag*this.traction*this.velX)*gS.frameTime/1000; //velX+=[wheelpower*fwxc-drag(VelX*const)] * time
-	this.velY+=(this.wheelPower*this.traction*fwxs-gS.gravity)*gS.frameTime/1000; 	     //velY+=[wheelpower*fwxs-gravity] *time
+	
+	//velX+=[wheelforce-grounddrag-gravitythough ground] * time
+	this.velX+=(this.wheelPower*this.traction*fwxc-gS.drag*this.traction*this.velX+this.traction*fwxs*gS.gravity)*gS.frameTime/1000; 
+	//velY+=[wheelpower*fwxs-gravity] *time
+	this.velY+=(-this.wheelPower*this.traction*fwxs-gS.gravity+this.traction*fwxc*gS.gravity*.7)*gS.frameTime/1000; 	  
+	
 	
 	this.speed=Math.sqrt(this.velX*this.velX+this.velY*this.velY);
 	if (this.velX<0) this.speed*=-1;
@@ -46,6 +50,7 @@ function avatarTick()
 		var galt=getAltitude(this.posLeft+fwxc*this.wheeloff[i]);
 		var alt=this.posBottom-fwxs*this.wheeloff[i]/gS.textRatio;
 		var dif=alt-galt;
+		if (dif<.25) this.wheels[i].wheelRot+=this.speed/1*gS.frameTime/1000;
 		if (distGround>dif) distGround=dif;
 	  }	
 	  if (distGround<-1.5) { //we hit a cliff!
@@ -64,6 +69,7 @@ function avatarTick()
 	  this.traction=1;
 	} else this.traction=0;
 	
+	if ((this.traction>0)&&startJump) this.velY+=20;
 	
 	if (distGround<.5) {
 		//Calculate a good angle for this spot on the board
@@ -79,14 +85,14 @@ function avatarTick()
 		}
 		this.style.transform="rotate("+this.angle.toFixed(3)+"rad)";	
 		
-		this.wheelRot+=this.speed/1*gS.frameTime/1000;
+		
 	}
 	
 	//put all the wheels in place too
 	for (var i=0;i<3;i+=1) {
 		this.wheels[i].posLeft=this.posLeft-2+fwxc*this.wheeloff[i];
 	    this.wheels[i].posBottom=this.posBottom-fwxs*this.wheeloff[i]/gS.textRatio;
-		this.wheels[i].style.transform="rotate("+this.wheelRot+"rad)";	
+		this.wheels[i].style.transform="rotate("+this.wheels[i].wheelRot+"rad)";	
 	}
 	
 }

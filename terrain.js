@@ -4,12 +4,38 @@ function addSimpleTerrain(symbolList,width,add)
 	  var sym=symbolList.charAt(i%(symbolList.length-1));
 	  addTerrainBlock(sym);
   }
-  if (add) createTerrainObject();  
+  if (add) createTerrainObject(add==2);
+  
+}
+
+function addSlope(width,height,add) {
+	addCurvedTerrain(width,height,add,function(x) { return 3*x*x-2*x*x*x; } );
+}
+
+
+function addCurvedTerrain(width,height,add,curvefunc)
+{
+	var start=gS.terrainAlt;
+	for (i=0;i<width;i+=1) {
+		var y=curvefunc(i/width)*height;
+		var yp=Math.floor(y);
+		var yfrac=y-yp;
+		gS.terrainAlt=start+yp;
+		var sym="";    
+		if (yfrac>.75) sym="'";
+		else if (yfrac>.5) sym="-";
+		else if (yfrac>.25) sym=".";
+		else sym="_";		
+		addTerrainBlock(sym);
+	}
+	if (yfrac>.8)
+		gS.terrainAlt+=1;		
+	if (add) createTerrainObject(add==2); 
 }
 
 
 //this guy creates and adds an object corresponding to the terrain that has been generated wil addTerrainBlock
-function createTerrainObject()
+function createTerrainObject(backdrop)
 {
   //add an extra 10 on the bottom
   gS.terrainAltMin-=20;
@@ -17,7 +43,6 @@ function createTerrainObject()
   var el=document.createElement('DIV');
   var width=gS.terrainEnd-gS.terrainStart;
   setElementClass(el,'cGO',true);
-  setElementClass(el,'cPT',true);
   	
   el.rowText=[];
   
@@ -32,7 +57,7 @@ function createTerrainObject()
   }
   
   el.posLeft=gS.terrainStart;
-  el.posRight=gS.terrainEnd;
+  el.posWidth=gS.terrainEnd-gS.terrainStart;
   el.posBottom=gS.terrainAltMin;
   el.posTop=gS.terrainAltMin+height;
   
@@ -45,12 +70,18 @@ function createTerrainObject()
   
   el.innerHTML=html;
   el.tick=terrainTick;
-  decorateArt(el,aS.terrain);
+  el.posPFactor=1;
+  decorateArt(el,backdrop?aS.backdrop:aS.terrain);
   createGameObject(el);  
   
   //reset the control for this stuff
-  gS.terrainStart=gS.terrainEnd;  
-  gS.terrainAltStart=gS.terrainAlt;
+  if (backdrop) {
+	gS.terrainEnd=gS.terrainStart;  
+    gS.terrainAlt=gS.terrainAltStart;    
+  } else {
+	gS.terrainStart=gS.terrainEnd;  
+    gS.terrainAltStart=gS.terrainAlt;    
+  }
   gS.terrainAltMax=-99999;
   gS.terrainAltMin=99999;	
 }
@@ -71,8 +102,14 @@ function addTerrainBlock(symbolgiven)
    switch (val.symbol) {
 	   case '\\': val.leftAF=1; break;
 	   case '/': val.rightAF=1; break;	   	   
-	   case ':': val.leftAF=val.rightAF=.4;
-	   case ',': val.leftAF=val.rightAF=0.2;	   
+	   case ',': val.rightAF=0.2; break; 
+	   case ':': val.leftAF=val.rightAF=.6; break;
+	   case '.': val.leftAF=val.rightAF=0.2; break; 
+	   case '-': val.leftAF=val.rightAF=0.5; break; 
+	   case '\'': val.leftAF=val.rightAF=0.8; break; 
+	   case 'W':
+	   case '!': val.leftAF=val.rightAF=1; break; 
+	   
    }
 
    gS.terrainAlt-=Math.floor(val.leftAF);
