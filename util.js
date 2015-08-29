@@ -51,3 +51,7 @@ function setElementClass(e,cls,set)
 	}	
 	return result;
  }
+ 
+ function insertArrayAt(array, index, arrayToInsert) {
+    Array.prototype.splice.apply(array, [index, 0].concat(arrayToInsert));
+}

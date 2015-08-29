@@ -41,10 +41,34 @@ function decorateArt(el,style)
 	
 }
 
-function addSimpleArt(art,xOff,yOff)
+function addSimpleArt(art,xOff,yOff,deco,repXCount,repYCount)
 {
-  //build divs from array
-  var height=art.l.length;  
+  if ((!repXCount)&&(art.repXCount)) repXCount=art.repXCount; //use default repeats if not specified
+  if ((!repYCount)&&(art.repYCount)) repYCount=art.repYCount;
+  
+  //expand out the ascii art
+  var l=art.l.slice();  //copy the string list
+  if (repXCount) {
+	 if (!art.repXStart) art.repXStart=0;
+     if (!art.repXEnd) art.repXEnd=l[0].length-1;	 
+     var s="";
+     //do it to every line
+	 for (var j=0;j<l.length;j+=1) {
+	   var v=l[j].substring(art.repXStart,art.repXEnd+1);
+	   var f=v;
+	   for (var i=0;i<repXCount-1;i+=1) f=f+v;
+	   l[j]=l[j].substring(0,art.repXStart)+f+l[j].substring(art.repXEnd+1);
+     }		 
+  }
+  if (repYCount) {
+	 if (!art.repYStart) art.repYStart=0;
+     if (!art.repYEnd) art.repYEnd=l.length-1;	 
+	 for (var i=0;i<repYCount-1;i+=1) 
+		 insertArrayAt(l,art.repYStart,l.slice(art.repYStart,art.repYEnd+1));
+  }     
+	
+	
+  var height=l.length;  
   var el=document.createElement('DIV');
   var width=0;
   setElementClass(el,'cGO',true);
@@ -58,15 +82,15 @@ function addSimpleArt(art,xOff,yOff)
   //finally build out the html
   var html="";
   for (var i=0;i<height;i+=1) { //add divs for each row
-    if (width<art.l[i].length) width=art.l[i].length;	
-    html+="<div>"+stringForHtml(art.l[i])+"</div>";
+    if (width<l[i].length) width=l[i].length;	
+    html+="<div>"+stringForHtml(l[i])+"</div>";
   }	      
   el.posWidth=width;  
   el.innerHTML=html;
   el.posPFactor=1;
   if (art.deco) decorateArt(el,art.deco);
+  if (deco) decorateArt(el,deco);
   el.tick=terrainTick; 
-  return createGameObject(el);    
-  
+  return createGameObject(el);      
 }
 

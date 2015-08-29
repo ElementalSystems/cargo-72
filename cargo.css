@@ -71,10 +71,14 @@ div.cST {
 /*the Avatar Buggy*/
 div.cAB { 
   font-size:7pt;
-  color: #FFF;
-  transform-origin: 0% 100%;
-  transform: rotate(0deg);
+  color: #FD2;
+  
+  transform-origin: 50% 100%;
   z-index: 100;
+}
+
+span.cAS {
+	background:#900;
 }
 
 
@@ -84,16 +88,43 @@ div.cAW {
   color: #000;
   font-weight: bold;
   transform-origin: 50% 50%;
-  transform: rotate(1.232rad);
   z-index: 101;
 }
 
 span.cWS{
-	background: #AAA;
+	background: #950;
 	
 }
 
+
+
 span.cWH{
-	background: #000;
-	color: #FFF;
+	background: #FA2;
+	color: #000;
+}
+
+/*Buildings*/
+div.cBB { 
+  font-size:10pt;
+  color: #44A;
+  z-index:85;
+}
+
+span.cBS { 
+  background: #225;
+}
+
+span.cBW { 
+  color: #AAF;
+}
+
+span.cBT { 
+  color: #00B;
+  background: #008;
+}
+
+
+span.cBR { 
+  color: #FFF;
+  
 }

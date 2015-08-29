@@ -17,6 +17,11 @@ function addConsoleText(message)
   setTimeout(removeTextConsoleLine,4000+500*textConsole.lines+50*textConsole.content.length); 
 }
 
+function addConsoleEvent(direction,message)
+{
+	addEvent(direction, function(){ addConsoleText(message);});
+}
+
 function doTextConsole()
 {
 	textConsole.position+=1;

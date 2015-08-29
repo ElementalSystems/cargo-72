@@ -1,4 +1,3 @@
-
 var gS=document.getElementById('iGS');
 	
 function createGameObject(el)
@@ -6,6 +5,15 @@ function createGameObject(el)
 	//add it to the passive object list
 	gS.passiveList.push(el);	
 	return el;
+}
+
+function addEvent(direction,act)
+{
+	var e={
+	   action: act,
+	   position: gS.terrainEnd
+	};	
+    gS.eQueue[direction].push(e);
 }
 
 function positionGameObject(el)
@@ -59,6 +67,8 @@ function createGame(level)
 	//gS.innerHTML='';
 	gS.activeList=[];
 	gS.passiveList=[];
+	gS.eQueueID=0;
+	gS.eQueue=[[],[]];
 	gS.level=level;
 	gS.heightMap=[];
 	gS.terrainStart=0;
@@ -124,9 +134,21 @@ function tick(timestamp)
     //figure out the camera
     if (gS.avatar) {
 	   gS.xOffset=-gS.avatar.posLeft+20;	   
-	   gS.yOffset=-gS.avatar.posBottom+5;	
+	   gS.yOffset=-gS.avatar.posBottom+10;	
 	} else 
 	   gS.xOffset=0;
+	
+	
+	if ((gS.eQueueID==0)&&(gS.eQueue[0].length>0)) 
+		if (gS.eQueue[0][0].position<gS.avatar.posLeft) {			
+			var ev=gS.eQueue[0].shift();
+			ev.action();
+  	    } 
+	if ((gS.eQueueID==1)&&(gS.eQueue[1].length>0)) 
+		if (gS.eQueue[1][gS.eQueue[1].length-1].position>gS.avatar.posLeft) {			
+			var ev=gS.eQueue[1].pop();
+			ev.action();
+  	    } 
 	
     //position active elements
 	for (var i=0;i<gS.activeList.length;i+=1) 
@@ -152,10 +174,5 @@ window['fOL']=function fOL()
 	
    createGame(sampleLevel);
    window.requestAnimationFrame(tick);   
-   addConsoleText("Unit CARGO-72 Online...");
-   addConsoleText("Internal Diagnostics: OKAY");
-   addConsoleText("Current Location: DIST-X42");
-   addConsoleText("Task: On Site Testing");
-   addConsoleText("Orders: Procede to Atmospheric Testing Ground");
    
 }
