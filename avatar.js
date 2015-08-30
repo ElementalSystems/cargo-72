@@ -85,9 +85,18 @@ function avatarTick()
 	//position the vehicle
 	this.posLeft=this.posX-5;
 	this.posBottom=this.posY;
-	
 	this.style.transform="rotate("+this.angle.toFixed(3)+"rad)";	
 	  
+	//position the cargo
+	if (this.cargo) {
+		//if (this.cargoLoadTime>500) //just place the damn thing
+		var x=this.posX+3*fwxs-5*fwxc;
+		var y=this.posY+(3*fwxc+5*fwxs)/gS.textRatio;
+		this.cargo.posLeft=x;
+		this.cargo.posBottom=y;
+	    this.cargo.style.transform="rotate("+this.angle.toFixed(3)+"rad)";		  		
+	}
+	
     //calculate new velocities
 	this.velX+=(this.wheelPower*this.traction*fwxc-gS.drag*this.traction*this.velX+this.traction*fwxs*gS.gravity)*gS.frameTime/1000; 
 	this.velY+=(-this.wheelPower*this.traction*fwxs-gS.gravity+this.traction*fwxc*gS.gravity*.7)*gS.frameTime/1000; 	  
@@ -102,4 +111,21 @@ function avatarTick()
 	  this.targetAngle=Math.atan2((lH-rH)*gS.textHeight,(this.wheels[2].posLeft-this.wheels[0].posLeft)*gS.textWidth);	
 	}
 		
+}
+
+
+function addLoadEvent(direction,cargo)
+{
+	addEvent(direction, function(){ 
+	  addConsoleText("Loading Cargo...");
+	  addConsoleText("Complete...Return to Base");
+	  gS.avatar.cargo=cargo;
+	  gS.avatar.cargoLoadX=cargo.posLeft;
+	  gS.avatar.cargoLoadY=cargo.posBottom;
+	  gS.avatar.cargoLoadTime=0;
+	  
+	  
+	}
+	  
+	);
 }

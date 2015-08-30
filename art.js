@@ -16,9 +16,6 @@ var aS={
     { pattern: "(\\S+ {0,5})*\\S", cls: "cBS" }, 
 	{ pattern: "\\*.+\\*", cls: "cBT" }, 
 	{ pattern: "[\\[\\]o]+", cls: "cBW" }
-  ],
-  building_asm: [
-    { pattern: "r+", replace: " ASSEMBLY X18 ", cls:"cBR"}
   ]
   
   
@@ -107,7 +104,36 @@ var aW={
 	  deco: aS.building,
       repXStart: 1, repXEnd: 1, repXCount: 20,	  
 	  repYStart: 5, repYEnd: 5, repYCount: 5	  	  
+  },
+  
+  
+  tank: {
+	  l:[  
+	       "  .+. ",
+	       ":#111#",
+		   "  '+' "
+	      
+	  ],
+	  cls: "cCT",
+	  deco: [{pattern: "\\S+", cls: "cCS"}],
+      repXStart: 3, repXEnd: 3, repXCount: 8	  	  
+  },
+  
+  platform: {
+	  l:[  
+	       "T=T",
+	       "| |",
+	       "| |",
+	       "X X"
+		   
+	  ],	  
+	  cls: "cBB",
+	  deco: aS.building,
+      repXStart: 1, repXEnd: 1, repXCount: 12	  	  
+	  
   }
+  
+  
     
 };
 

@@ -18,8 +18,8 @@ function addEvent(direction,act)
 
 function positionGameObject(el)
 {
-  el.style.bottom=((el.posBottom+gS.yOffset)*gS.textHeight*el.posPFactor)+"px";
-  el.style.left=((el.posLeft+gS.xOffset)*gS.textWidth*el.posPFactor)+"px";	  
+  el.style.left=((el.posLeft+gS.xOffset)*gS.textWidth*el.posPFactorX)+"px";	  
+  el.style.bottom=((el.posBottom+gS.yOffset)*gS.textHeight*el.posPFactorY)+"px";  
 }
 
 function examinePassiveList() 
@@ -28,7 +28,7 @@ function examinePassiveList()
 	var transfer=[];
 	for (var i=0;i<gS.passiveList.length;i+=1) {
 		var el=gS.passiveList[i];
-		var xpos=(el.posLeft+gS.xOffset)*el.posPFactor;
+		var xpos=(el.posLeft+gS.xOffset)*el.posPFactorX;
 		if (((xpos+el.posWidth)>(-gS.passiveSafetyMargin))&& //is it within margin of the left edge?
 		    (xpos<(gS.widthInText+gS.passiveSafetyMargin)))  //is within safety of the right edge
 			    transfer.push(el);			
@@ -44,7 +44,7 @@ function examinePassiveList()
 	transfer=[];
 	for (var i=0;i<gS.activeList.length;i+=1) {
 		var el=gS.activeList[i];
-		var xpos=(el.posLeft+gS.xOffset)*el.posPFactor;
+		var xpos=(el.posLeft+gS.xOffset)*el.posPFactorX;
 		if (((xpos+el.posWidth)<(-gS.passiveSafetyMargin))|| //left of the left edge
 		    (xpos>(gS.widthInText+gS.passiveSafetyMargin)))  //right of the right edge
 			    transfer.push(el);			

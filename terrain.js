@@ -1,19 +1,19 @@
-function addSimpleTerrain(symbolList,width,add)
+function addSimpleTerrain(symbolList,width,add,deco)
 {
   for (var i=0;i<width;i+=1) {
 	  var sym=symbolList.charAt(i%(symbolList.length-1));
 	  addTerrainBlock(sym);
   }
-  if (add) createTerrainObject(add==2);
+  if (add) createTerrainObject(deco);
   
 }
 
-function addSlope(width,height,add) {
-	addCurvedTerrain(width,height,add,function(x) { return 3*x*x-2*x*x*x; } );
+function addSlope(width,height,add,deco) {
+	addCurvedTerrain(width,height,add,deco,function(x) { return 3*x*x-2*x*x*x; } );
 }
 
 
-function addCurvedTerrain(width,height,add,curvefunc)
+function addCurvedTerrain(width,height,add,deco,curvefunc)
 {
 	var start=gS.terrainAlt;
 	for (i=0;i<width;i+=1) {
@@ -30,12 +30,12 @@ function addCurvedTerrain(width,height,add,curvefunc)
 	}
 	if (yfrac>.8)
 		gS.terrainAlt+=1;		
-	if (add) createTerrainObject(add==2); 
+	if (add) createTerrainObject(deco); 
 }
 
 
 //this guy creates and adds an object corresponding to the terrain that has been generated wil addTerrainBlock
-function createTerrainObject(backdrop)
+function createTerrainObject(deco)
 {
   //add an extra 10 on the bottom
   gS.terrainAltMin-=20;
@@ -70,12 +70,12 @@ function createTerrainObject(backdrop)
   
   el.innerHTML=html;
   el.tick=terrainTick;
-  el.posPFactor=1;
-  decorateArt(el,backdrop?aS.backdrop:aS.terrain);
+  el.posPFactorX=el.posPFactorY=1;
+  decorateArt(el,deco?deco:aS.terrain);
   createGameObject(el);  
   
-  //reset the control for this stuff
-  if (backdrop) {
+  //reset the control for this stuff if it was not in the main plane
+  if (el.outOfPlane) {
 	gS.terrainEnd=gS.terrainStart;  
     gS.terrainAlt=gS.terrainAltStart;    
   } else {
@@ -122,7 +122,7 @@ function addTerrainBlock(symbolgiven)
    gS.terrainEnd+=1;
 }
 
-function addTerrainToAltitude(targetAlt,width)
+function addTerrainToAltitude(targetAlt,width,deco)
 {
   for (var i=0;i<width;i+=1) {
 	var terrainDiff=targetAlt-gS.terrainAlt;
@@ -136,11 +136,32 @@ function addTerrainToAltitude(targetAlt,width)
 	  default: addTerrainBlock((terrainDiff>0)?'/':'\\'); break;	  
 	}
   }
-  return createTerrainObject();  
+  return createTerrainObject(deco);  
 }
 
 
 function terrainTick()
 {
 	
+}
+
+
+
+function addEnvSheet(top,bottom,cls)
+{
+  var el=document.createElement('DIV');
+  setElementClass(el,'cGO',true);
+  setElementClass(el,cls,true);
+  
+  el.posLeft=5;
+  el.posWidth=gS.widthInText;
+  el.posBottom=bottom;
+  el.posTop=top;  
+  el.posPFactorX=0;
+  el.posPFactorY=1;
+  el.tick=terrainTick; 
+  el.outOfPlane=1;
+  el.style.height=(top-bottom)*gS.textHeight;
+  el.style.width=gS.widthInText*gS.textWidth;
+  return createGameObject(el);      
 }

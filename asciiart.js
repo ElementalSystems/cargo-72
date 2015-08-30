@@ -34,7 +34,7 @@ function decorateArt(el,style)
 			 );		     	 		     
 		  }  else  {//apply stuff to whole div
 		     if (style[j].cls) setElementClass(el,style[j].cls,true);
-			 if (style[j].pFactor) el.posPFactor=style[j].pFactor;			 			 
+			 if (style[j].pFactor) { el.posPFactorX=el.posPFactorY=style[j].pFactor; el.outOfPlane=1; }
 		  }
 	    list[i].innerHTML=text;
 	}	
@@ -87,7 +87,7 @@ function addSimpleArt(art,xOff,yOff,deco,repXCount,repYCount)
   }	      
   el.posWidth=width;  
   el.innerHTML=html;
-  el.posPFactor=1;
+  el.posPFactorX=el.posPFactorY=1;
   if (art.deco) decorateArt(el,art.deco);
   if (deco) decorateArt(el,deco);
   el.tick=terrainTick; 
