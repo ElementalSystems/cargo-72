@@ -75,6 +75,7 @@ function createGame(level)
 	gS.terrainAltStart=0;
 	gS.terrainEnd=0;
 	gS.terrainAlt=0;
+	gS.score=0;
 	gS.terrainAltMax=-99999;
 	gS.terrainAltMin=99999;
 	gS.lastPassiveXOffset=100000;
@@ -117,6 +118,13 @@ function getAltitude(x)
 	return hm.altitude+(1-xfrac)*hm.leftAF+xfrac*hm.rightAF;
 }
 
+function getHM(x)
+{
+	if (x<0) return {};
+	return gS.heightMap[Math.floor(x)];		
+}
+
+
 function tick(timestamp)
 {
 	//lets work out the times
@@ -154,7 +162,14 @@ function tick(timestamp)
 	for (var i=0;i<gS.activeList.length;i+=1) 
 	  positionGameObject(gS.activeList[i]);
      
-	
+	//reconsider the buggy environment parameters
+	if (gS.avatar.posBottom<30) {
+	  gS.gravity=30;
+	  gS.drag=5;
+	} else {
+	  gS.gravity=50;
+	  gS.drag=2;
+	}
 	
     //if we have moved 80% of our safety margin	on making objects active then we needs to have a look
 	if (Math.abs(gS.xOffset-gS.lastPassiveXOffset)>gS.passiveSafetyMargin*.8)

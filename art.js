@@ -95,15 +95,13 @@ var aW={
 	  l:[  
 	       "***",
 	       "*1*",
-	       "*2*",
-	       "*3*",
 	       "***",
 	       "X X"
 	  ],
 	  cls: "cBB",
 	  deco: aS.building,
       repXStart: 1, repXEnd: 1, repXCount: 20,	  
-	  repYStart: 5, repYEnd: 5, repYCount: 5	  	  
+	  repYStart: 3, repYEnd: 3, repYCount: 5	  	  
   },
   
   

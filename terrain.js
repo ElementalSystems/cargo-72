@@ -1,10 +1,10 @@
-function addSimpleTerrain(symbolList,width,add,deco)
+function addSimpleTerrain(symbolList,width,add,deco,deco2)
 {
   for (var i=0;i<width;i+=1) {
 	  var sym=symbolList.charAt(i%(symbolList.length-1));
 	  addTerrainBlock(sym);
   }
-  if (add) createTerrainObject(deco);
+  if (add) createTerrainObject(deco,deco2);
   
 }
 
@@ -35,7 +35,7 @@ function addCurvedTerrain(width,height,add,deco,curvefunc)
 
 
 //this guy creates and adds an object corresponding to the terrain that has been generated wil addTerrainBlock
-function createTerrainObject(deco)
+function createTerrainObject(deco,deco2)
 {
   //add an extra 10 on the bottom
   gS.terrainAltMin-=20;
@@ -72,6 +72,8 @@ function createTerrainObject(deco)
   el.tick=terrainTick;
   el.posPFactorX=el.posPFactorY=1;
   decorateArt(el,deco?deco:aS.terrain);
+  if (deco2)
+    decorateArt(el,deco2);
   createGameObject(el);  
   
   //reset the control for this stuff if it was not in the main plane
@@ -96,7 +98,8 @@ function addTerrainBlock(symbolgiven)
    var  val={
 		  leftAF:0,
 		  rightAF:0,
-		  symbol: symbolgiven		  
+		  symbol: symbolgiven,
+		  damage: 0
 	    };
 		
    switch (val.symbol) {
@@ -104,11 +107,12 @@ function addTerrainBlock(symbolgiven)
 	   case '/': val.rightAF=1; break;	   	   
 	   case ',': val.rightAF=0.2; break; 
 	   case ':': val.leftAF=val.rightAF=.6; break;
+	   case '1': val.leftAF=val.rightAF=1; break;
 	   case '.': val.leftAF=val.rightAF=0.2; break; 
 	   case '-': val.leftAF=val.rightAF=0.5; break; 
 	   case '\'': val.leftAF=val.rightAF=0.8; break; 
 	   case 'W':
-	   case '!': val.leftAF=val.rightAF=1; break; 
+	   case '!': val.leftAF=val.rightAF=1; val.damage=100; break; 
 	   
    }
 

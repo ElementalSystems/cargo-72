@@ -1,6 +1,8 @@
 //console thing
 
 var textConsole=document.getElementById('iTC');
+var damageConsole=document.getElementById('iDI');
+var scoreConsole=document.getElementById('iSC');
 
 textConsole.position=0;	  
 textConsole.lines=0;
@@ -30,8 +32,7 @@ function doTextConsole()
 	else
 		setTimeout(doTextConsole,(textConsole.content.charAt(textConsole.position)=='\n')?500:50);	
 	
-	textConsole.innerHTML=textConsole.content.substring(0,textConsole.position)+(textConsole.active?"_":"");
-	
+	textConsole.innerHTML=textConsole.content.substring(0,textConsole.position)+(textConsole.active?"_":"");	
 }
 
 function removeTextConsoleLine()
@@ -42,4 +43,22 @@ function removeTextConsoleLine()
 	textConsole.position-=i;
 	textConsole.lines-=1;	
 	if (!textConsole.active) doTextConsole();
+}
+
+function takeDamage(amount)
+{
+	gS.avatar.damage+=amount;
+	damageConsole.style.width=gS.avatar.damage.toFixed(1)+"%";    	
+}
+
+function gainScore(text,amount)
+{
+	addConsoleText("Score +"+amount.toFixed(0)+"("+text+")");
+	gS.score+=amount;
+	scoreConsole.innerHTML="SCORE "+gS.score;
+}
+
+function addScoreEvent(direction,text,amount)
+{
+	addEvent(direction,function() {gainScore(text,amount);});
 }

@@ -17,6 +17,7 @@ function addBuggy()
 	el.rotateSpeed=3.14; //radians per second 1.57 = 90 deg per second
 	el.traction=0;
 	el.wheels[0].wheelRot=el.wheels[1].wheelRot=el.wheels[2].wheelRot=0;
+	el.damage=0;
 }
 
 function avatarTick()
@@ -53,10 +54,15 @@ function avatarTick()
 	//check for collisions at every new wheel position
 	var distGround=1000;
 	for (var i=0;i<3;i+=1) {		
-		var galt=getAltitude(this.posX+fwxs*1+fwxc*this.wheeloff[i]);
+	    var x=this.posX+fwxs*1+fwxc*this.wheeloff[i];
+		var galt=getAltitude(x);
 		var alt=this.posY-1+(fwxc*1-fwxs*this.wheeloff[i])/gS.textRatio;
 		var dif=alt-galt;
 		if (dif<.25) this.wheels[i].wheelRot+=this.speed/5*gS.frameTime/1000;
+		if (dif<0) {
+			var dam=getHM(x).damage;
+			if (dam) takeDamage(dam*gS.frameTime/1000);
+		}
 		if (distGround>dif) distGround=dif;
 	}	
     
@@ -114,17 +120,19 @@ function avatarTick()
 }
 
 
-function addLoadEvent(direction,cargo)
+function addLoadEvent(direction,cargo,returnNow)
 {
 	addEvent(direction, function(){ 
-	  addConsoleText("Loading Cargo...");
-	  addConsoleText("Complete...Return to Base");
+	  addConsoleText("Cargo Loaded.");
 	  gS.avatar.cargo=cargo;
 	  gS.avatar.cargoLoadX=cargo.posLeft;
 	  gS.avatar.cargoLoadY=cargo.posBottom;
 	  gS.avatar.cargoLoadTime=0;
-	  
-	  
+	  gainScore("CARGO-SAFE",500);
+	  if (returnNow) {
+	    gS.eQueueID=1;
+		addConsoleText("Return to base.");
+	  }	  
 	}
 	  
 	);
