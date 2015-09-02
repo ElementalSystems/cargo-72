@@ -63,8 +63,12 @@ function examinePassiveList()
 
 function createGame(level)
 {
+	setConsoleState(1);
 	//clear out the display space and buffers
-	//gS.innerHTML='';
+	if (gS.activeList) {
+		for (var i=0;i<gS.activeList.length;i+=1)
+			gS.removeChild(gS.activeList[i]);
+	}
 	gS.activeList=[];
 	gS.passiveList=[];
 	gS.eQueueID=0;
@@ -75,18 +79,17 @@ function createGame(level)
 	gS.terrainAltStart=0;
 	gS.terrainEnd=0;
 	gS.terrainAlt=0;
-	gS.score=0;
 	gS.terrainAltMax=-99999;
 	gS.terrainAltMin=99999;
 	gS.lastPassiveXOffset=100000;
 	gS.passiveSafetyMargin=30;
-	gS.gameStartTime=0;
-	
+	gS.gameStartTime=0;	
 	gS.gravity=30;
 	gS.drag=5;
-	bindControls(gS);
-	   
-	
+	gS.endGame=0;
+	bindControls(gS);	
+		
+	   	
 	//now do each section of the content
     for (var i=0; i<level.content.length;i+=1) {
 		var endPos=(level.content[i].distance)?gS.terrainStart+level.content[i].distance:0;
@@ -103,6 +106,12 @@ function createGame(level)
 			   if (gS.terrainStart>endPos) break; //wide enough now
 			} else if (deck.isEmpty()) break; //finished the sequence						
 		}
+	}
+	
+	document.getElementById('iTT').innerHTML="Task: "+level.title;
+	//give the initial orders
+	for (var i=0;i<level.orders.length;i+=1) {
+		addConsoleText(level.orders[i]);
 	}
 }
 
@@ -127,6 +136,11 @@ function getHM(x)
 
 function tick(timestamp)
 {
+	
+	window.requestAnimationFrame(tick);
+	if (!gS.avatar) return; //no avatar no game loop
+	if (gS.endGame) return; //game over  no game loop
+	
 	//lets work out the times
 	if (!gS.gameStartTime) {
 		gS.gameStartTime=timestamp;
@@ -140,12 +154,9 @@ function tick(timestamp)
 	  gS.activeList[i].tick();
   
     //figure out the camera
-    if (gS.avatar) {
-	   gS.xOffset=-gS.avatar.posLeft+20;	   
-	   gS.yOffset=-gS.avatar.posBottom+10;	
-	} else 
-	   gS.xOffset=0;
-	
+    gS.xOffset=-gS.avatar.posLeft+gS.widthInText/2;
+    gS.yOffset=-gS.avatar.posBottom+10;	
+
 	
 	if ((gS.eQueueID==0)&&(gS.eQueue[0].length>0)) 
 		if (gS.eQueue[0][0].position<gS.avatar.posLeft) {			
@@ -175,10 +186,9 @@ function tick(timestamp)
 	if (Math.abs(gS.xOffset-gS.lastPassiveXOffset)>gS.passiveSafetyMargin*.8)
 	  examinePassiveList();
       
-	window.requestAnimationFrame(tick);
 }
 
-window['fOL']=function fOL()
+function measureTheWorld()
 {
 	//measure the world
    var e=document.getElementById('iMM');
@@ -187,7 +197,57 @@ window['fOL']=function fOL()
    gS.textRatio=gS.textHeight/gS.textWidth;
    gS.widthInText=gS.offsetWidth/gS.textWidth;
 	
-   createGame(sampleLevel);
-   window.requestAnimationFrame(tick);   
-   
+}
+
+function mainMenu()
+{
+  setConsoleState(0);
+  addConsoleText("CARGO-72\n");
+  addConsoleText("..an invasion is only\n   as good as its supply line..\n");
+  
+  addConsoleText("<a onclick='start(0,1)' href='#'>[Play from Start]</a>\n");  
+  //addConsoleText("<a onclick='start(1,1)' href='#'>[Play from DIST-54]</a>\n");  
+  //addConsoleText("<a onclick='start(0,1)' href='#'>[Play from FWD-19]</a>\n");  
+  addConsoleText("a game by elementalsystems\n   for twelvegamesayear\n");  
+
+}
+
+function endGame(win)
+{
+	gS.endGame=1;
+	if (win) {
+	  setConsoleState(0);
+	  addConsoleText(gS.level.title+": COMPLETED\n");
+	  addConsoleText("Score "+gS.score);
+	  addConsoleText("\n<a href='#' onclick='start("+gS.levelNumber+1+",0)'>[NEXT TASK]</a>");		
+	} else {
+	  setConsoleState(0);
+	  addConsoleText(gS.level.title+": FAILED\n");
+	  addConsoleText("Final Score "+gS.score);
+	  addConsoleText("\n<a href='#' onclick='mainMenu()'>[MAIN MENU]</a>");		
+	  addConsoleText("\n<a href='#' onclick='start("+gS.levelNumber+",1)'>[RESTART FROM"+gS.level.title+"]</a>");				
+	}
+}
+
+function addWinGameEvent(direction)
+{
+	 addEvent(direction,function(){
+		 endGame(1);
+	 });
+}
+
+window['fOL']=function fOL()
+{
+   measureTheWorld();
+   mainMenu();   
+   window.requestAnimationFrame(tick);      
+}
+
+window['start']=function start(lev,clear)
+{
+	if (clear) 
+		gS.score=0;
+    gS.levelNumber=lev;	
+	createGame(levels[lev]);
+	return false;
 }

@@ -18,6 +18,7 @@ function addBuggy()
 	el.traction=0;
 	el.wheels[0].wheelRot=el.wheels[1].wheelRot=el.wheels[2].wheelRot=0;
 	el.damage=0;
+	takeDamage(0); //update the damage displayf
 }
 
 function avatarTick()

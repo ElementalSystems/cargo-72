@@ -49,22 +49,21 @@ var oC={
 };
 
 var eC={
-  welcome: function() { addConsoleEvent(0,"Unit CARGO-72...Online..."); addConsoleEvent(0,"SYS-CHK-SUM: OKAY"); addConsoleEvent(0,"Status: Unit Ready");  addConsoleEvent(0,"Proceed to Test Zone");  addConsoleEvent(0,"Use [D] to move rightwards.");  },
-  moveInstruct: function() { addConsoleEvent(0,"LIVE-ENV QA Test: INIT"); addConsoleEvent(0,"Use [A] and [D] to control the buggy");   },
+  moveInstruct: function() { addConsoleEvent(0,"LIVE-ENV QA Test: INIT"); addConsoleEvent(0,"Use <i>[A]</i> + <i>[D]</i> to control the buggy");   },
   jumpInstruct: function() { addConsoleEvent(0,"Press [Space] to Jump");  },
   dangerInstruct: function() { addConsoleEvent(0,"HAZ-INFO: Terrain Dangerous"); addConsoleEvent(0,"Danger zones can damage you.");  },
   reverseInstruct: function() { addConsoleEvent(1,"You are slower in reverse."); addConsoleEvent(1,"Some obstacles will be harder.");  },
   outInstruct: function() { addConsoleEvent(0,"ENV-INFO: In Atmospshere"); addConsoleEvent(0,"There is less drag out of water."); addConsoleEvent(0,"But gravity affects the you more."); },
   score100: function() {  addScoreEvent(0,"Section complete",100);}  ,
-  missionCompleted: function() { addScoreEvent(1,"Mission Completed",1000); }
+  missionCompleted: function() { addScoreEvent(1,"Mission Completed",1000); addWinGameEvent(1); }
 };
 
 
 var levels=[
   { 
     title: 'QA:MARINE',
+	orders: ["Unit CARGO-72...Online...","SYS-CHK-SUM: OKAY","Status: Unit Ready","Proceed to Test Zone","Use [D] to move rightwards." ],
     content: [
-	   { set: [eC.welcome] },
 	   { set: [tC.block,oC.shallowsheet,tC.lev10,oC.base_asm,tC.lev10,tS.hill,eC.missionCompleted,oC.buggy,tC.lev50,oC.tritower,tC.bump,tC.lev10,tC.bump,tS.hill,tC.lev50,oC.tower,tC.lev10]  },
 	   { set: [tC.up,tC.lev10,oC.billboard_qa1,eC.moveInstruct,tC.lev20,oC.tritower,tC.bump2,tC.lev20,tC.down,tC.lev20,tC.up,tC.lev10,eC.jumpInstruct,tC.lev20,tC.hurdle,tC.hurdlex,tC.bump2,eC.dangerInstruct,tC.lev50,tC.dangerzone,tC.lev50,tC.dangerzone,tC.lev50,oC.billboard_qa2,tC.lev20] },
 	   { set: [tC.to0,tC.rough,tC.hill,tC.rise,tS.hill,tC.cliffup,tC.softdown,tC.level,tC.dangerzone,tC.hurdlex], distance: 400 },
@@ -73,6 +72,7 @@ var levels=[
   },
   { 
     title: 'QA:ATMOS',
+    orders: ["QA:ATMOS: INIT","Ascend to Atmospheric\n testing ground."],
     content: [
 	   { set: [tC.block,oC.shallowsheet,oC.skysheet,tC.lev10,oC.base_asm,tC.lev10,tS.hill,eC.missionCompleted,oC.buggy,tC.lev50,oC.tritower,tC.bump,tC.lev10,tC.bump,tS.hill,tC.lev50,oC.tower,tC.lev10]  },
 	   { set: [tC.to20,tC.to20,tC.to20,tC.softup,tC.softdown,tC.rough], distance: 200 },
@@ -84,6 +84,4 @@ var levels=[
   }
 
 ];
-
-var sampleLevel=levels[1];
 

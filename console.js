@@ -1,54 +1,87 @@
-//console thing
 
 var textConsole=document.getElementById('iTC');
 var damageConsole=document.getElementById('iDI');
 var scoreConsole=document.getElementById('iSC');
 
-textConsole.position=0;	  
-textConsole.lines=0;
-	
+
+function setConsoleState(rem) {
+  textConsole.lines=[];
+  textConsole.nlines=[];
+  textConsole.lineout=[];
+
+  setElementClass(document.body,'play',rem);
+
+  textConsole.currentNew="";
+  textConsole.position=-1;	  
+  textConsole.time=0;
+  textConsole.content="";
+  textConsole.remove=rem;
+  buildConsoleContent();
+}
+
 function addConsoleText(message)
 {
-  if (!textConsole.active) {
-	  textConsole.content=message+"\n";
-	  textConsole.active=1;
-	  doTextConsole();
-  } else
-	 textConsole.content+=message+"\n";
-  textConsole.lines+=1;
-  setTimeout(removeTextConsoleLine,4000+500*textConsole.lines+50*textConsole.content.length); 
+	textConsole.nlines.push(message);	
 }
+
+function buildConsoleContent()
+{  
+  textConsole.content="";
+  for (var i=0;i<textConsole.lines.length;i+=1) 
+    textConsole.content+=textConsole.lines[i]+"\n";	
+  textConsole.innerHTML=textConsole.content;
+}
+
+function consoleTick()
+{
+	var nextTime=50;
+	if (textConsole.position<0) { //waiting
+	  if (textConsole.nlines.length) { //we have new lines to add
+	     var e=textConsole.nlines[0];
+	     textConsole.currentNew=e.replace(/<.+?>/g,"");
+		 textConsole.position=0;
+		 nextTime=500;
+	  }	
+	  if (textConsole.lineout.length&&textConsole.remove) { //maybe we should remove some
+	    if (textConsole.lineout[0]<textConsole.time) {
+			textConsole.lines.shift();
+			textConsole.lineout.shift();			
+			buildConsoleContent();
+			nextTime=200;
+		}			
+	  }
+	} else {
+		//add a new character
+		textConsole.innerHTML=textConsole.content+textConsole.currentNew.substring(0,textConsole.position)+"_";
+		textConsole.position+=1;
+		if (textConsole.position==textConsole.currentNew.length) { //finished the line - rebuild 
+		  textConsole.lines.push(textConsole.nlines.shift());
+		  textConsole.lineout.push(textConsole.time+5000);
+		  buildConsoleContent()		  
+		  textConsole.position=-1;				  
+		}		
+	}
+	textConsole.time+=nextTime;
+	setTimeout(consoleTick,nextTime);
+	
+}
+
+setConsoleState(1);
+consoleTick();
 
 function addConsoleEvent(direction,message)
 {
 	addEvent(direction, function(){ addConsoleText(message);});
 }
 
-function doTextConsole()
-{
-	textConsole.position+=1;
-	if (textConsole.position>textConsole.content.length) 
-		textConsole.active=0;
-	else
-		setTimeout(doTextConsole,(textConsole.content.charAt(textConsole.position)=='\n')?500:50);	
-	
-	textConsole.innerHTML=textConsole.content.substring(0,textConsole.position)+(textConsole.active?"_":"");	
-}
-
-function removeTextConsoleLine()
-{
-	var i=textConsole.content.indexOf('\n');
-	if (i>0) 
-	     textConsole.content=textConsole.content.substring(i+1);
-	textConsole.position-=i;
-	textConsole.lines-=1;	
-	if (!textConsole.active) doTextConsole();
-}
 
 function takeDamage(amount)
 {
 	gS.avatar.damage+=amount;
 	damageConsole.style.width=gS.avatar.damage.toFixed(1)+"%";    	
+	if (gS.avatar.damage>100)  {
+		endGame(0);		
+	}
 }
 
 function gainScore(text,amount)
