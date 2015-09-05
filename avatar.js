@@ -18,6 +18,7 @@ function addBuggy()
 	el.traction=0;
 	el.wheels[0].wheelRot=el.wheels[1].wheelRot=el.wheels[2].wheelRot=0;
 	el.damage=0;
+	el.jumpReqTime=0;
 	takeDamage(0); //update the damage displayf
 }
 
@@ -25,12 +26,16 @@ function avatarTick()
 {		
     //handle controls
     this.wheelPower=0;    
-	if (controls.isKeyDown(68)) 
+	if (controls.isRight()) 
 		this.wheelPower=120;
-	if (controls.isKeyDown(65)) 
+	if (controls.isLeft()) 
 		this.wheelPower=-100;
-	var startJump=controls.isKeyDown(32);
 	
+	if (controls.jumpTrigger)
+	{
+		controls.jumpTrigger=0;
+		this.jumpReqTime=250;
+	}
 	//so lets do physics
 	//rotate to the target angle
 	if (this.targetAngle>this.angle) {
@@ -80,7 +85,11 @@ function avatarTick()
 	  this.traction=1;
 	} else this.traction=0;
 		
-	if ((this.traction>0)&&startJump) this.velY+=20;
+	if ((this.traction>0)&&(this.jumpReqTime>0)) {
+		this.velY+=20;
+		this.jumpReqTime=0;
+	}
+	this.jumpReqTime-=gS.frameTime;
 	  
 	//position the wheels
 	for (var i=0;i<3;i+=1) {
@@ -123,18 +132,27 @@ function avatarTick()
 
 function addLoadEvent(direction,cargo,returnNow)
 {
-	addEvent(direction, function(){ 
-	  addConsoleText("Cargo Loaded.");
-	  gS.avatar.cargo=cargo;
-	  gS.avatar.cargoLoadX=cargo.posLeft;
-	  gS.avatar.cargoLoadY=cargo.posBottom;
-	  gS.avatar.cargoLoadTime=0;
-	  gainScore("CARGO-SAFE",500);
-	  if (returnNow) {
+	addEvent(direction, function() { 
+	  if (gS.avatar.cargo) {
+		addConsoleText("Cargo Unloaded.");
+	    gS.avatar.cargo=null;
+		gainScore("CARGO-DELIVERY",500);	    
+	  }
+	  if (cargo) {
+	    addConsoleText("Cargo Loaded.");
+	    gS.avatar.cargo=cargo;
+	    gS.avatar.cargoLoadX=cargo.posLeft;
+	    gS.avatar.cargoLoadY=cargo.posBottom;
+	    gS.avatar.cargoLoadTime=0;
+	    gainScore("CARGO-LOAD",500);	    
+      }	  
+	  
+      if (returnNow) {
 	    gS.eQueueID=1;
-		addConsoleText("Return to base.");
-	  }	  
+	    addConsoleText("Return to base.");
+	  }		  
 	}
 	  
+    
 	);
 }

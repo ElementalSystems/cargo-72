@@ -8,4 +8,5 @@
 --js console.js 
 --js asciiart.js 
 --js avatar.js 
+--js actor.js
 --js_output_file cc.js

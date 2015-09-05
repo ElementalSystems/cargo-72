@@ -63,7 +63,7 @@ function examinePassiveList()
 
 function createGame(level)
 {
-	setConsoleState(1);
+    setConsoleState(1,["Task "+level.title+" :: Downloading orders"]);
 	//clear out the display space and buffers
 	if (gS.activeList) {
 		for (var i=0;i<gS.activeList.length;i+=1)
@@ -178,8 +178,8 @@ function tick(timestamp)
 	  gS.gravity=30;
 	  gS.drag=5;
 	} else {
-	  gS.gravity=50;
-	  gS.drag=2;
+	  gS.gravity=40;
+	  gS.drag=3;
 	}
 	
     //if we have moved 80% of our safety margin	on making objects active then we needs to have a look
@@ -203,26 +203,33 @@ function mainMenu()
 {
   setConsoleState(0);
   addConsoleText("CARGO-72\n");
-  addConsoleText("..an invasion is only\n   as good as its supply line..\n");
+  addConsoleText("..an invasion is only as\n    good as its supply line..\n");
   
   addConsoleText("<a onclick='start(0,1)' href='#'>[Play from Start]</a>\n");  
-  //addConsoleText("<a onclick='start(1,1)' href='#'>[Play from DIST-54]</a>\n");  
+  addConsoleText("<a onclick='start(3,1)' href='#'>[Play from DIST-54]</a>\n");  
   //addConsoleText("<a onclick='start(0,1)' href='#'>[Play from FWD-19]</a>\n");  
-  addConsoleText("a game by elementalsystems\n   for twelvegamesayear\n");  
+  addConsoleText("a game by elementalsystems for twelvegamesayear\n");  
 
 }
 
 function endGame(win)
 {
 	gS.endGame=1;
-	if (win) {
-	  setConsoleState(0);
-	  addConsoleText(gS.level.title+": COMPLETED\n");
-	  addConsoleText("Score "+gS.score);
-	  addConsoleText("\n<a href='#' onclick='start("+gS.levelNumber+1+",0)'>[NEXT TASK]</a>");		
+	if (win) {	  
+	  setConsoleState(0,["Task "+gS.level.title+" :: Complete\n"]);
+	  var lScore=gS.levelNumber*1000+500;
+	  gainScore("Level Complete",lScore);
+	  if (gS.gameTime/1000<gS.level.time) 
+		gainScore("Time Bonus",lScore*(1-gS.gameTime/1000/gS.level.time));
+	  if (gS.avatar.damage<0.1) 
+		gainScore("No Damage!",lScore*1.5);
+	  else
+		gainScore("Damage bonus",lScore*(1-gS.avatar.damage/100));
+	  
+	  addConsoleText("\nCurrent Score "+gS.score);
+	  addConsoleText("\n<a href='#' onclick='start("+(gS.levelNumber+1)+",0)'>[DOWNLOAD NEW TASK]</a>");		
 	} else {
-	  setConsoleState(0);
-	  addConsoleText(gS.level.title+": FAILED\n");
+	  setConsoleState(0,["Task "+gS.level.title+" :: FAILED"]);
 	  addConsoleText("Final Score "+gS.score);
 	  addConsoleText("\n<a href='#' onclick='mainMenu()'>[MAIN MENU]</a>");		
 	  addConsoleText("\n<a href='#' onclick='start("+gS.levelNumber+",1)'>[RESTART FROM"+gS.level.title+"]</a>");				
@@ -239,6 +246,7 @@ function addWinGameEvent(direction)
 window['fOL']=function fOL()
 {
    measureTheWorld();
+   startConsole();
    mainMenu();   
    window.requestAnimationFrame(tick);      
 }

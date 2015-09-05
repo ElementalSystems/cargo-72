@@ -6,6 +6,10 @@ function randomInt(min,max) {
      return Math.floor(min+(max-min+1)*Math.random());
    }
 
+function random(min,max) {
+     return min+(max-min)*Math.random();
+}
+
    
 function stringForHtml(str) {
     return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -55,3 +59,11 @@ function setElementClass(e,cls,set)
  function insertArrayAt(array, index, arrayToInsert) {
     Array.prototype.splice.apply(array, [index, 0].concat(arrayToInsert));
 }
+
+function interpolate(x1,x2,r) {  return x2*r+x1*(1-r); }
+function interpolateSISO(x1,x2,r) { 
+  r=3*r*r-2*r*r*r;
+  return x2*r+x1*(1-r); }
+
+ 
+

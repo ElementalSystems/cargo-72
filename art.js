@@ -2,23 +2,45 @@
 var aS={
   terrain:  [
     { cls: "cPT"  },    
-    { pattern: "#+", cls: "cTS" },
-	{ pattern: "#+", replace_r: "@&#%$" },
+	{ pattern: "#+", replace_r: "@&#%$" , cls: "cTS"},
 	{ pattern: "[!]+", cls: "cTD" }
+  ],
+  terraing:  [
+    { cls: "cGT"  },    
+	{ pattern: "#+", replace_r: "      w v.," , cls: "cGS"}
   ],
   backdrop:  [
     { cls: "cST" } ,
 	{ pFactor: .8 },    
-	{ pattern: "#+", replace_r: "  o .  ' , " }
+	{ pattern: "[\\\\/.'\\-]+", cls: "cSH" },
+	{ pattern: "#+", replace_r: "  o.'    ",cls:"cSG"}
 	
+  ],
+  backdrop2:  [
+    { cls: "cST2" } ,
+	{ pFactor: .6 },    
+	{ pattern: "[\\\\/.'\\-]+", cls: "cSH2" },
+	{ pattern: "#+", replace_r: "  ^          ", cls: "cSG2" }	
   ],
   building: [
     { pattern: "(\\S+ {0,5})*\\S", cls: "cBS" }, 
 	{ pattern: "\\*.+\\*", cls: "cBT" }, 
-	{ pattern: "[\\[\\]o]+", cls: "cBW" }
+	{ pattern: "[\\[\\]oO]+", cls: "cBW" }
+  ],
+  
+  aqualife: [
+    { pattern: "{.+}", cls: "cLS" },
+	{ pattern: "[*!]+", cls: "cLD" }
+	
+  ],
+  
+  landlife: [
+    { pattern: "\\|.*?\\|", cls: "cLS" },	
+	{ pattern: "\\(oo\\)|\\\\/", cls: "cLI" }
+	
+	
+
   ]
-  
-  
   
 };
 
@@ -114,7 +136,8 @@ var aW={
 	  ],
 	  cls: "cCT",
 	  deco: [{pattern: "\\S+", cls: "cCS"}],
-      repXStart: 3, repXEnd: 3, repXCount: 8	  	  
+      repXStart: 3, repXEnd: 3, repXCount: 8,
+      repYStart: 1, repYEnd: 1, repYCount: 1	  	  
   },
   
   platform: {
@@ -129,10 +152,69 @@ var aW={
 	  deco: aS.building,
       repXStart: 1, repXEnd: 1, repXCount: 12	  	  
 	  
+  },
+  
+  dome: {
+	  l:[  
+	      "        !       ",
+          "     _.-^-._    ",
+          "  .-'   O   '-. ",
+          " / O.  -O-  .O \\",
+          "/_______________\\",
+		  "       | |       " ,
+		  " ||||||||||||||||"  
+     ],	  
+	  cls: "cBB",
+	  deco: aS.building,
+      repXStart: 4, repXEnd: 12, repXCount: 3,
+	  repYStart: 1, repYEnd: 5, repYCount: 3	  	  
+  },
+  ctower: {
+	  l:[  
+	      "     _.-^-._    ",
+          "  .-'   O   '-. ",
+          " -111111111111-",
+          "  '-.   O   .-' ",
+          "       | |      " ,
+		  "      |[o]|      " ,
+		  " ||||||||||||||||"  
+     ],	  
+	  cls: "cBB",
+	  deco: aS.building,
+      repYStart: 4, repYEnd: 5, repYCount: 4	  	  
+  },
+  jellyfish: {
+	  l:[
+	    "  {-;':':';-}",
+        " {   d   b   }",
+        "{      ^      }",
+        "{=-=-=-=-=-=-=}",
+        "   ) { (  ){( ",
+        "  (  }  )( } )",
+        "  *    **   *",
+		" !*! !*!*! !*!"        
+	  ],
+	  cls: 'cAL',
+	  deco: aS.aqualife,
+      repYStart: 4, repYEnd: 5, repYCount: 3	  	  
+  },
+  cow: {
+	  l:[
+	    "         (__)",
+		"         (oo)",
+		"  /|-----|\\/",
+	    " / |     |",
+        "*  ||----||",
+        "   ^^    ^^" 	
+	  ],
+	  cls: 'cLL',
+	  deco: aS.landlife
   }
+
   
   
-    
+ 
+  
 };
 
 
