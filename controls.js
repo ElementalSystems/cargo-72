@@ -7,8 +7,16 @@ var controls={
 	touchl: { },
 	touchr: { },
 	
-	isRight: function() {return controls.touchr.down||controls.isKeyDown(68);},
-	isLeft:  function() {return controls.touchl.down||controls.isKeyDown(65);},
+	isRight: function() {		
+		return controls.touchr.down||
+		       (controls.touchr.startUp+200>gS.gameTime)||
+		       controls.isKeyDown(68);
+	},
+	isLeft:  function() {
+		return controls.touchl.down||
+		       (controls.touchl.startUp+200>gS.gameTime)||
+		       controls.isKeyDown(65);
+	},
 	
 	
 	keyEvent: function(keyCode,keyDown) {
@@ -25,11 +33,12 @@ var controls={
 			var t=tl[i];
 			var side=(t.clientX<controls.width/2)?controls.touchl:controls.touchr;
 			if (down) {
+			  if ((gS.gameTime-side.startUp)<200) controls.jumpTrigger=1;			  
 			  side.start=gS.gameTime;
               side.down=1;			  
 			} else {
-			  if ((gS.gameTime-side.start)<200) controls.jumpTrigger=1;
 			  side.start=0;
+			  side.startUp=gS.gameTime;
               side.down=0;			  
 			}
 		}
