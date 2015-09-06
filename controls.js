@@ -37,6 +37,7 @@ var controls={
 			  side.start=gS.gameTime;
               side.down=1;			  
 			} else {
+			  if ((gS.gameTime-side.start)<200) controls.jumpTrigger=1;
 			  side.start=0;
 			  side.startUp=gS.gameTime;
               side.down=0;			  

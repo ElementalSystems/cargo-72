@@ -155,7 +155,7 @@ function tick(timestamp)
   
     //figure out the camera
     gS.xOffset=-gS.avatar.posLeft+gS.widthInText/2;
-    gS.yOffset=-gS.avatar.posBottom+10;	
+    gS.yOffset=-gS.avatar.posBottom+(gS.heightInText)/2-4;
 
 	
 	if ((gS.eQueueID==0)&&(gS.eQueue[0].length>0)) 
@@ -195,7 +195,8 @@ function measureTheWorld()
    gS.textWidth=e.clientWidth;
    gS.textHeight=e.clientHeight;
    gS.textRatio=gS.textHeight/gS.textWidth;
-   gS.widthInText=gS.offsetWidth/gS.textWidth;
+   gS.widthInText=window.innerWidth/gS.textWidth;
+   gS.heightInText=window.innerHeight/gS.textHeight;
 	
 }
 

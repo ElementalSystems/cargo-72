@@ -21,15 +21,21 @@ function randomDrift(el,maxX,maxY,minalt,maxalt,time)
   el.moveTime+=gS.frameTime;  	
 }
 
+function isCollision(el,xsize,ysize) {
+	if ((el.posBottom+ysize<gS.avatar.posBottom)|| //our top is beneath the avatar
+	    (el.posBottom>gS.avatar.posBottom+4)|| //our bottom is above the avatars top edge
+		(el.posLeft+xsize<gS.avatar.posLeft)|| //our right is left of the avatars left edge
+		(el.posLeft>gS.avatar.posLeft+9)) //our left is right of the avatars right edge
+   		   return 0;
+    return 1;	
+}
+
 function jellyTick()
 {
   randomDrift(this,20,10,0.5,12,2000);
-  
-  //also hurt him if I must
-  if ((this.posBottom<gS.avatar.posBottom+2)&&(this.posBottom>gS.avatar.posBottom-2)&&
-      (this.posLeft+3>gS.avatar.posLeft)&&(this.posLeft<gS.avatar.posLeft+4))
-	    takeDamage(50*gS.frameTime/1000)
-	   
+    
+  if (isCollision(this,4,2)) 
+	    takeDamage(50*gS.frameTime/1000)	   
   
 }
 
@@ -40,12 +46,13 @@ function cowTick()
 	
 	
   //also hurt him if I must
-  if ((this.posBottom<gS.avatar.posBottom+3)&&(this.posBottom+2>gS.avatar.posBottom)&&
-      (this.posLeft+4>gS.avatar.posLeft)&&(this.posLeft<gS.avatar.posLeft+4)) {
+  if (isCollision(this,5,3)) {
 		if (this.dead)
 	      takeDamage(25*gS.frameTime/1000)
 	    else {
 		  this.dead=1;
+		  gS.avatar.velX=0;
+		  gS.avatar.velY=0;
 		  takeDamage(20);
 		  gainScore("Hit Native Fauna",-200);
 		}

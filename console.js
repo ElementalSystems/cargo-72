@@ -10,6 +10,8 @@ function setConsoleState(rem,current) {
   else textConsole.lines=[];
   textConsole.nlines=[];
   textConsole.lineout=[];
+  for (var i=0;i<textConsole.lines.length;i+=1)   textConsole.lineout.push(textConsole.time+5000);		
+	  
 
   setElementClass(document.body,'play',rem);
 
