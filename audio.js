@@ -3,10 +3,10 @@ var aud={
      ctx: (new (window.AudioContext || window.webkitAudioContext)()),
 	 
 	 startSound:function(freq,vol,wave) {
-	   var osc = this.ctx.createOscillator();
-       var gainN = this.ctx.createGain();
+	   var osc = aud.ctx.createOscillator();
+       var gainN = aud.ctx.createGain();
 	   osc.connect(gainN);
-       gainN.connect(this.ctx.destination);
+       gainN.connect(aud.ctx.destination);
 	   gainN.gain.value=vol;
 	   if (!wave) wave='sawtooth';
        osc.type = wave; // sine wave — other values are 'square', 'sawtooth', 'triangle' and 'custom'
@@ -15,21 +15,21 @@ var aud={
        return { 
 	     gain: gainN.gain,
 		 freq: osc.frequency,
-		 stop: function(when) { osc.stop(when);}
+		 osc: osc
 	   };
 	 
 	 },
 	 
 	 playsound:function(freq,vol,length,wave) {
-	    var s=this.startSound(freq,vol,wave);
-		var now = this.ctx.currentTime;
-        s.stop(now+length);
+	    var s=aud.startSound(freq,vol,wave);
+		var now = aud.ctx.currentTime;
+        s.osc.stop(now+length);
         return s;		
 	 },
 	 
 	 playnote: function(freq,vol,ut,ft,dt,wave) {
-	    var now = this.ctx.currentTime;
-        var s=this.playsound(freq,vol,ut+ft+dt,wave);
+	    var now = aud.ctx.currentTime;
+        var s=aud.playsound(freq,vol,ut+ft+dt,wave);
 		s.gain.setValueAtTime(0,now);  
         s.gain.linearRampToValueAtTime(vol, now+ut);
   	    s.gain.setValueAtTime(vol,now+ut+ft);  
@@ -37,8 +37,8 @@ var aud={
 	 },
 	 
 	  playSlide: function(freq,freq2,vol,ut,ft,dt,wave) {
-	    var now = this.ctx.currentTime;
-        var s=this.playsound(freq,vol,ut+ft+dt,wave);
+	    var now = aud.ctx.currentTime;
+        var s=aud.playsound(freq,vol,ut+ft+dt,wave);
 		s.freq.setValueAtTime(freq,now);  
         s.freq.linearRampToValueAtTime(freq2, now+ut);
   	    s.freq.setValueAtTime(freq2,now+ut+ft);  

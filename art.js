@@ -41,9 +41,12 @@ var aS={
   landlife: [
     { pattern: "\\|.*?\\|", cls: "cLS" },	
 	{ pattern: "\\(oo\\)|\\\\/", cls: "cLI" }
+  ],
+  machine: [
+   { pattern: "\\\\.+/", cls: "cMS" },
+   { pattern: "\\|.*?\\|", cls: "cMT" }
+   
 	
-	
-
   ]
   
 };
@@ -223,6 +226,23 @@ var aW={
 	  cls: 'cCC',	  
 	  repXStart: 1, repXEnd: 2, repXCount: 12,	 
 	  repYStart: 0, repYEnd: 1, repYCount: 4	  	  
+  },
+  battleship: {
+	  l:[
+	"                       /\\     ( )",
+    "                    ___\\/______|___",
+    "                _   |            |  _",
+    "          _ -==| |  |            | | |==-",
+    "      -==| |...|'|__|------------|_|-|__",
+    "\\--------'''   .  .  .  . -#- .  .  .   \\-----/",
+    " \\  USS INCORRIGIBLE                         /",
+    "  \\   o  o  o  o  o  o  o      o  o  o  o   /",
+    "   \\                                       /",
+    "    \\_____________________________________/"	   
+	  ],
+	  cls: 'cMM',	  	
+      deco: aS.machine,
+	  repXStart: 25, repXEnd: 29, repXCount: 5	  
   }
 
   

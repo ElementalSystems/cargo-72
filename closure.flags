@@ -1,13 +1,13 @@
 --compilation_level ADVANCED 
---js cargo.js 
 --js art.js 
 --js audio.js 
---js controls.js 
 --js util.js 
+--js controls.js 
+--js console.js 
 --js decks.js 
 --js terrain.js 
---js console.js 
 --js asciiart.js 
 --js avatar.js 
 --js actor.js
+--js cargo.js
 --js_output_file cc.js

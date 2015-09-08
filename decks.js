@@ -70,6 +70,7 @@ var oC={
   
   cow: function() { addActor(aW.cow,cowTick,0,-1); },
   cow_s: function() { addActor(aW.cow,cowsTick,0,-1); },
+  battleship: function() { addSimpleArt(aW.battleship,0,-gS.terrainAlt+26); },
   
   
   shallowsheet: function() { addEnvSheet(30,-50,'cSS'); }  ,
@@ -164,7 +165,7 @@ var levels=[
   },
   { 
     title: 'DST:FWD-REFUEL',
-    orders: ["Transport Fuel to Forward Invasion Base","HAZ-INFO: Night conditions, no hostile response expected","HAZ-INFO: Sleeping native fauna.","TASK-INFO: Long distance"],
+    orders: ["Transport Fuel to Forward Invasion Base C22","HAZ-INFO: Night conditions, no hostile response expected","HAZ-INFO: Sleeping native fauna.","TASK-INFO: Long distance"],
     time:300,
 	conditions: "n",	
 	content: [
@@ -202,6 +203,34 @@ var levels=[
 	   
 	]
   },
+  { 
+    title: 'DST:DUTY TRANSFER',
+    orders: ["Proceed to Forward C22 for reassignment.","HAZ_INFO: Aggessive Organics (Armed)"],
+    time:180,
+	
+	content: [
+	   { set: sets.base_dist  },	   	   
+	   { set: sets.upto_shallows },
+	   { set: [tC.to20,tC.softdown,tC.level,oC.battleship,tC.level,tC.rise,tC.level] },
+	   { set: sets.dangerfloorm20 ,distance:100},	   	   
+	   { set: sets.upto_shallows },
+	   { set: sets.upto_island },
+	   { set: [tS.hill,tC.field,tC.field,oC.cow_s,tC.field,tC.fieldrise], distance: 300 },
+	   { set: sets.downto_shallows },
+	   { set: sets.upto_island },
+	   { set: [tS.hill2,tC.level,tC.rise,oC.cow,tC.level,tC.hill], distance: 150 },
+	   { set: sets.downto_shallows },	   	   
+	   { set: [tC.to20,tC.softdown,tC.level,oC.battleship,tC.level,tC.rise,tC.level] },
+	   { set: sets.upto_island },
+	   { set: [tS.hill,tC.field,oC.cow_s,oC.cow_s,tC.field,tC.field,tC.fieldrise], distance: 150 },
+	   { set: sets.downto_shallows },	   
+	   { set: sets.downto_0 ,distance:100},	   
+	   { set: sets.dangerfloorm20 ,distance:200},	   
+	   { set: sets.downto_deep  },	   	   
+	   { set: [tC.lev50,tC.bump2,oC.base_fwd,eC.missionCompletedOW,tC.lev50,tC.lev20,tC.cliffup,tC.cliffup,tC.block] }
+	     
+	]
+  }
   
 
 ];

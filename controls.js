@@ -10,17 +10,20 @@ var controls={
 	isRight: function() {		
 		return controls.touchr.down||
 		       (controls.touchr.startUp+200>gS.gameTime)||
-		       controls.isKeyDown(68);
+		       controls.isKeyDown(68)||
+			   controls.isKeyDown(39);
 	},
 	isLeft:  function() {
 		return controls.touchl.down||
 		       (controls.touchl.startUp+200>gS.gameTime)||
-		       controls.isKeyDown(65);
+		       controls.isKeyDown(65)||
+			   controls.isKeyDown(37);
 	},
 	
 	
 	keyEvent: function(keyCode,keyDown) {
-		if (keyDown&&(keyCode==32)) controls.jumpTrigger=1;
+		if (keyDown)
+			if  ((keyCode==32)||(keyCode==87)||(keyCode==38)) controls.jumpTrigger=1;
 	    controls.keyList[keyCode]=keyDown;
 	},
 		

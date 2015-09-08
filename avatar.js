@@ -29,7 +29,7 @@ function addBuggy()
 
 function avatarEnd()
 {
-	this.engineSound.stop();
+	this.engineSound.osc.stop();
 }
 
 function avatarTick()

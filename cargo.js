@@ -211,8 +211,8 @@ function mainMenu()
   addConsoleText("..an invasion is only as\n    good as its supply line..\n");
   
   addConsoleText("<a onclick='start(0,1)' href='#'>[Play from Start]</a>\n");  
-  addConsoleText("<a onclick='start(5,1)' href='#'>[Play from DIST-X19]</a>\n");  
-  addConsoleText("<a onclick='start(6,1)' href='#'>[Play from FWD-C22]</a>\n");  
+  addConsoleText("<a onclick='start(3,1)' href='#'>[Play from DIST-X19]</a>\n");  
+  addConsoleText("<a onclick='start(7,1)' href='#'>[Play from FWD-C22]</a>\n");  
   addConsoleText("a game by elementalsystems for twelvegamesayear\n");  
 
 }
