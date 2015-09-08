@@ -87,6 +87,10 @@ function createGame(level)
 	gS.gravity=30;
 	gS.drag=5;
 	gS.endGame=0;
+	setElementClass(gS,"n",0);
+	if (level.conditions)
+	    setElementClass(gS,level.conditions,1);
+	
 	bindControls(gS);	
 		
 	   	
@@ -207,8 +211,8 @@ function mainMenu()
   addConsoleText("..an invasion is only as\n    good as its supply line..\n");
   
   addConsoleText("<a onclick='start(0,1)' href='#'>[Play from Start]</a>\n");  
-  addConsoleText("<a onclick='start(3,1)' href='#'>[Play from DIST-54]</a>\n");  
-  //addConsoleText("<a onclick='start(0,1)' href='#'>[Play from FWD-19]</a>\n");  
+  addConsoleText("<a onclick='start(5,1)' href='#'>[Play from DIST-X19]</a>\n");  
+  addConsoleText("<a onclick='start(6,1)' href='#'>[Play from FWD-C22]</a>\n");  
   addConsoleText("a game by elementalsystems for twelvegamesayear\n");  
 
 }
@@ -216,6 +220,7 @@ function mainMenu()
 function endGame(win)
 {
 	gS.endGame=1;
+	gS.avatar.endGame();
 	if (win) {	  
 	  setConsoleState(0,["Task "+gS.level.title+" :: Complete\n"]);
 	  var lScore=gS.levelNumber*1000+500;
@@ -249,7 +254,8 @@ window['fOL']=function fOL()
    measureTheWorld();
    startConsole();
    mainMenu();   
-   window.requestAnimationFrame(tick);      
+   window.requestAnimationFrame(tick);     
+   
 }
 
 window['start']=function start(lev,clear)

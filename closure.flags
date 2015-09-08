@@ -1,6 +1,7 @@
 --compilation_level ADVANCED 
 --js cargo.js 
 --js art.js 
+--js audio.js 
 --js controls.js 
 --js util.js 
 --js decks.js 

@@ -4,6 +4,7 @@ function addBuggy()
 	var el=addSimpleArt(aW.buggy,5,5);
 	gS.avatar=el;
 	el.tick=avatarTick;	
+	el.endGame=avatarEnd;	
 	el.angle=0;
 	el.targetAngle=0;
 	el.wheels=[addSimpleArt(aW.buggy_w,0,0),addSimpleArt(aW.buggy_w,0,0),addSimpleArt(aW.buggy_w,0,0)];
@@ -19,7 +20,16 @@ function addBuggy()
 	el.wheels[0].wheelRot=el.wheels[1].wheelRot=el.wheels[2].wheelRot=0;
 	el.damage=0;
 	el.jumpReqTime=0;
-	takeDamage(0); //update the damage displayf
+	takeDamage(0); //update the damage display
+	
+	el.engineSound=aud.startSound(80,0,"sine");
+	
+}
+
+
+function avatarEnd()
+{
+	this.engineSound.stop();
 }
 
 function avatarTick()
@@ -87,6 +97,7 @@ function avatarTick()
 		
 	if ((this.traction>0)&&(this.jumpReqTime>0)) {
 		this.velY+=20;
+		aud.playSlide(100,1600,.5,.2,0.01,.1,'sine');  
 		this.jumpReqTime=0;
 	}
 	this.jumpReqTime-=gS.frameTime;
@@ -105,19 +116,25 @@ function avatarTick()
 	  
 	//position the cargo
 	if (this.cargo) {
-		//if (this.cargoLoadTime>500) //just place the damn thing
 		var x=this.posX+3*fwxs-5*fwxc;
 		var y=this.posY+(3*fwxc+5*fwxs)/gS.textRatio;
 		this.cargo.posLeft=x;
 		this.cargo.posBottom=y;
 	    this.cargo.style.transform="rotate("+this.angle.toFixed(3)+"rad)";		  		
+		if (this.cargo2) {
+		  this.cargo2.posLeft=x;
+		  this.cargo2.posBottom=y;
+	      this.cargo2.style.transform="rotate("+this.angle.toFixed(3)+"rad)";		  		
+		}
 	}
+	
+	
 	
     //calculate new velocities
 	this.velX+=(this.wheelPower*this.traction*fwxc-gS.drag*this.traction*this.velX+this.traction*fwxs*gS.gravity)*gS.frameTime/1000; 
 	this.velY+=(-this.wheelPower*this.traction*fwxs-gS.gravity+this.traction*fwxc*gS.gravity*.7)*gS.frameTime/1000; 	  
 	
-	this.speed=Math.sqrt(this.velX*this.velX+this.velY*this.velY);
+	this.absspeed=this.speed=Math.sqrt(this.velX*this.velX+this.velY*this.velY);
 	if (this.velX<0) this.speed*=-1;
 	
 	if (distGround<0.25) {
@@ -126,16 +143,34 @@ function avatarTick()
 	  var rH=getAltitude(this.wheels[2].posLeft+1.5);
 	  this.targetAngle=Math.atan2((lH-rH)*gS.textHeight,(this.wheels[2].posLeft-this.wheels[0].posLeft)*gS.textWidth);	
 	}
+	
+	//modify the sound
+	var t=aud.ctx.currentTime+0.1;		
+	if (this.traction) {
+		if (this.absspeed>1) {
+			if (this.wheelPower!=0)
+		      this.engineSound.gain.linearRampToValueAtTime(1, t);
+		    else
+			  this.engineSound.gain.linearRampToValueAtTime(.5, t);
+		   this.engineSound.freq.linearRampToValueAtTime(80+this.absspeed*2, t);		   
+		} else {
+		   this.engineSound.gain.linearRampToValueAtTime(0, t);
+		}
+	} else {
+		//this.engineSound.gain.linearRampToValueAtTime(.2, t);
+		//this.engineSound.freq.linearRampToValueAtTime(70, t);
+	}
 		
 }
 
 
-function addLoadEvent(direction,cargo,returnNow)
+function addLoadEvent(direction,cargo,cargo2,returnNow)
 {
 	addEvent(direction, function() { 
 	  if (gS.avatar.cargo) {
 		addConsoleText("Cargo Unloaded.");
 	    gS.avatar.cargo=null;
+		gS.avatar.cargo2=null;
 		gainScore("CARGO-DELIVERY",500);	    
 	  }
 	  if (cargo) {
@@ -145,6 +180,10 @@ function addLoadEvent(direction,cargo,returnNow)
 	    gS.avatar.cargoLoadY=cargo.posBottom;
 	    gS.avatar.cargoLoadTime=0;
 	    gainScore("CARGO-LOAD",500);	    
+      }	  
+	  if (cargo2) {
+	    gS.avatar.cargo2=cargo2;
+	    gS.avatar.cargoLoadTime=0;	    
       }	  
 	  
       if (returnNow) {

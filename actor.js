@@ -39,6 +39,30 @@ function jellyTick()
   
 }
 
+
+
+function cowsTick()
+{
+  if (!this.dead) 
+	  randomDrift(this,.1,1,-2.5,-1.5,4000);  
+		
+  //also hurt him if I must
+  if (isCollision(this,5,3)) {
+		if (this.dead)
+	      takeDamage(15*gS.frameTime/1000)
+	    else {
+		  this.dead=1;
+		  
+		  gS.avatar.velX=0;
+		  gS.avatar.velY=0;
+		  gainScore("Killed Native Fauna",-200);
+		  takeDamage(20);
+		}
+		  
+  }
+	  
+}
+
 function cowTick()
 {
   if (!this.dead) 
@@ -48,18 +72,18 @@ function cowTick()
   //also hurt him if I must
   if (isCollision(this,5,3)) {
 		if (this.dead)
-	      takeDamage(25*gS.frameTime/1000)
+	      takeDamage(15*gS.frameTime/1000)
 	    else {
 		  this.dead=1;
 		  gS.avatar.velX=0;
 		  gS.avatar.velY=0;
 		  takeDamage(20);
 		  gainScore("Hit Native Fauna",-200);
-		}
-		  
+		}		  
   }
 	  
 }
+
 
 function addActor(art,func,x,y,deco,repx,repy)
 {

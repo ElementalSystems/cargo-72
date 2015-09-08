@@ -27,6 +27,10 @@ var aS={
 	{ pattern: "\\*.+\\*", cls: "cBT" }, 
 	{ pattern: "[\\[\\]oO]+", cls: "cBW" }
   ],
+  building2: [
+    { pattern: "(\\S+ {0,5})*\\S", cls: "cBS2" }, 	
+	{ pattern: "[\\[\\]oO]+", cls: "cBW2" }
+  ],
   
   aqualife: [
     { pattern: "{.+}", cls: "cLS" },
@@ -165,7 +169,7 @@ var aW={
 		  " ||||||||||||||||"  
      ],	  
 	  cls: "cBB",
-	  deco: aS.building,
+	  deco: aS.building2,
       repXStart: 4, repXEnd: 12, repXCount: 3,
 	  repYStart: 1, repYEnd: 5, repYCount: 3	  	  
   },
@@ -180,7 +184,7 @@ var aW={
 		  " ||||||||||||||||"  
      ],	  
 	  cls: "cBB",
-	  deco: aS.building,
+	  deco: aS.building2,
       repYStart: 4, repYEnd: 5, repYCount: 4	  	  
   },
   jellyfish: {
@@ -209,6 +213,16 @@ var aW={
 	  ],
 	  cls: 'cLL',
 	  deco: aS.landlife
+  },
+  cage: {
+	  l:[
+	    "+-+",
+		"| |",
+		"###"
+	  ],
+	  cls: 'cCC',	  
+	  repXStart: 1, repXEnd: 2, repXCount: 12,	 
+	  repYStart: 0, repYEnd: 1, repYCount: 4	  	  
   }
 
   
