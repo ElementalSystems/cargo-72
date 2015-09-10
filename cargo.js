@@ -226,7 +226,7 @@ function mainMenu()
   
   addConsoleText("<a onclick='start(0,1)' href='#'>[Play from Start]</a>\n");  
   addConsoleText("<a onclick='start(3,1)' href='#'>[Play from DIST-X19]</a>\n");  
-  addConsoleText("<a onclick='start(5,1)' href='#'>[Play from FWD-C22]</a>\n");  
+  addConsoleText("<a onclick='start(8,1)' href='#'>[Play from FWD-C22]</a>\n");  
   addConsoleText("a game by elementalsystems for twelvegamesayear\n");  
 
 }
@@ -252,7 +252,7 @@ function endGame(win)
 	  setConsoleState(0,["Task "+gS.level.title+" :: FAILED"]);
 	  addConsoleText("Final Score "+gS.score);
 	  addConsoleText("\n<a href='#' onclick='mainMenu()'>[MAIN MENU]</a>");		
-	  addConsoleText("\n<a href='#' onclick='start("+gS.levelNumber+",1)'>[RESTART FROM"+gS.level.title+"]</a>");				
+	  addConsoleText("\n<a href='#' onclick='start("+gS.levelNumber+",1)'>[RESTART FROM "+gS.level.title+"]</a>");				
 	}
 }
 

@@ -38,7 +38,7 @@ function buildConsoleContent()
 function consoleTick()
 {	
 	iCC.innerHTML="Time "+(gS.gameTime/1000).toFixed(0)+"s";
-	var nextTime=5;//0;
+	var nextTime=50;
 	if (textConsole.position<0) { //waiting
 	  if (textConsole.nlines.length) { //we have new lines to add
 	     var e=textConsole.nlines[0];
