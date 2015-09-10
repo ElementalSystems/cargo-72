@@ -32,6 +32,7 @@ var controls={
 	},	
 	
 	touch: function(tl,down) {
+		controls.isTouch=1;
 		for (var i=0;i<tl.length;i+=1) {
 			var t=tl[i];
 			var side=(t.clientX<controls.width/2)?controls.touchl:controls.touchr;

@@ -371,3 +371,117 @@ span.cMS {
 span.cMT {
   background: rgba(128,100,100,1);
 }
+
+div.cMZ {
+	color:#FFF;
+	font-size:100%;
+	z-index: 90;	
+}
+
+div.cMZ span.cMS {
+  background: rgba(0,0,200,.8);
+}
+
+div.cMZ span.cMT {
+  background: rgba(200,0,0,.8);
+}
+
+
+/*ammunition */
+div.cMA {
+  color: #FF0;
+  background: #A00;
+  z-index: 91;
+  transition: transform .25s ease;
+  transform: scale(.3) rotate(45deg);    
+}
+
+div.cMA.x {
+  font-size: 30%;  
+  background: rgba(255,0,0,.5);
+  transform: scale(5) rotate(174deg);    
+  transform-origin: 50% 50%;
+  transition: transform 0.1s ease;
+}
+
+/* Robot */
+div.cRB { 
+  font-size: 110%;
+  color: #000;  
+  z-index: 90;
+}
+
+div.cRB2 { 
+  font-size: 80%;
+  color: #000;  
+  z-index: 85;
+}
+
+
+div.cRB span.cAS {
+	background:rgba(50,0,0,0.5);
+}
+
+
+div.cRB2 span.cAS {
+	background:rgba(100,0,50,0.8);
+}
+
+span.cAX {
+	background:rgba(150,0,0,.8);
+	color: #FB0;  
+}
+
+div.cHS {/* human Soldiers*/
+  color: #000;
+  font-size: 30%;
+  z-index: 90;
+  font-weight: 900;    
+  transform-origin: 10% 100%;
+}
+
+span.cHU {
+	background: #050;
+	
+}
+
+div.cFS {/* final solution bomb*/
+  color: #FA8;
+  background: rgba(50,0,0,.8);
+  z-index: 90;   
+  font-size:80%;
+  transform-origin: 0% 100%;
+}
+
+div.cCL {/* Clouds*/
+  color: rgba(255,255,255,0.8);
+  z-index: 40;
+}
+
+span.cCB {
+	background: rgba(192,192,192,.5);	
+}
+
+#iGS.n div.cCL {/* Clouds at night*/
+  color: rgba(128,128,128,0.5);
+  z-index: 40;
+}
+
+
+div.cSM {/* SUN*/
+  color: rgba(250,192,64,1);
+  z-index: 20;
+}
+
+span.cSB {
+  background: rgba(250,192,64,.8);  
+}
+
+#iGS.n div.cSM {/* MOON*/
+  color: rgba(64,64,255,.2);
+  z-index: 20;
+}
+
+#iGS.n span.cSB {
+  background: rgba(200,200,255,1);  
+}

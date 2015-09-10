@@ -71,6 +71,8 @@ function createTerrainObject(deco,deco2)
   el.innerHTML=html;
   el.tick=terrainTick;
   el.posPFactorX=el.posPFactorY=1;
+  el.posPOffX=el.posPOffY=0;
+  
   decorateArt(el,deco?deco:aS.terrain);
   if (deco2)
     decorateArt(el,deco2);
@@ -163,6 +165,7 @@ function addEnvSheet(top,bottom,cls)
   el.posTop=top;  
   el.posPFactorX=0;
   el.posPFactorY=1;
+  el.posPOffX=el.posPOffY=0
   el.tick=terrainTick; 
   el.outOfPlane=1;
   el.style.height=(top-bottom)*gS.textHeight;

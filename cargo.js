@@ -18,8 +18,8 @@ function addEvent(direction,act)
 
 function positionGameObject(el)
 {
-  el.style.left=((el.posLeft+gS.xOffset)*gS.textWidth*el.posPFactorX)+"px";	  
-  el.style.bottom=((el.posBottom+gS.yOffset)*gS.textHeight*el.posPFactorY)+"px";  
+  el.style.left=(((el.posLeft+gS.xOffset)*el.posPFactorX+el.posPOffX)*gS.textWidth)+"px";	  
+  el.style.bottom=(((el.posBottom+gS.yOffset)*el.posPFactorY+el.posPOffY)*gS.textHeight)+"px";    
 }
 
 function examinePassiveList() 
@@ -87,11 +87,14 @@ function createGame(level)
 	gS.gravity=30;
 	gS.drag=5;
 	gS.endGame=0;
+	gS.driftTarget=0;
+	gS.drift=0;
 	setElementClass(gS,"n",0);
 	if (level.conditions)
 	    setElementClass(gS,level.conditions,1);
 	
-	bindControls(gS);	
+	bindControls(gS);
+    gainScore(null,0);	
 		
 	   	
 	//now do each section of the content
@@ -139,8 +142,7 @@ function getHM(x)
 
 
 function tick(timestamp)
-{
-	
+{	
 	window.requestAnimationFrame(tick);
 	if (!gS.avatar) return; //no avatar no game loop
 	if (gS.endGame) return; //game over  no game loop
@@ -157,8 +159,20 @@ function tick(timestamp)
 	for (var i=0;i<gS.activeList.length;i+=1) 
 	  gS.activeList[i].tick();
   
+    //calculate gS drift factor
+	if (gS.avatar.velX>1) gS.driftTarget=-gS.widthInText*.4;
+    else if (gS.avatar.velX<-1) gS.driftTarget=gS.widthInText*.4-10;
+	else gS.driftTarget=0;
+	
+	//move the drift
+	if (gS.drift<gS.driftTarget-1)
+		gS.drift+=gS.frameTime*10/1000;
+	if (gS.drift>gS.driftTarget+1)
+		gS.drift-=gS.frameTime*10/1000;
+	
+	
     //figure out the camera
-    gS.xOffset=-gS.avatar.posLeft+gS.widthInText/2;
+    gS.xOffset=-gS.avatar.posLeft+gS.widthInText/2+gS.drift;
     gS.yOffset=-gS.avatar.posBottom+(gS.heightInText)/2-4;
 
 	
@@ -212,7 +226,7 @@ function mainMenu()
   
   addConsoleText("<a onclick='start(0,1)' href='#'>[Play from Start]</a>\n");  
   addConsoleText("<a onclick='start(3,1)' href='#'>[Play from DIST-X19]</a>\n");  
-  addConsoleText("<a onclick='start(7,1)' href='#'>[Play from FWD-C22]</a>\n");  
+  addConsoleText("<a onclick='start(5,1)' href='#'>[Play from FWD-C22]</a>\n");  
   addConsoleText("a game by elementalsystems for twelvegamesayear\n");  
 
 }
@@ -254,8 +268,7 @@ window['fOL']=function fOL()
    measureTheWorld();
    startConsole();
    mainMenu();   
-   window.requestAnimationFrame(tick);     
-   
+   window.requestAnimationFrame(tick);        
 }
 
 window['start']=function start(lev,clear)

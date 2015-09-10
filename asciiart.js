@@ -34,7 +34,7 @@ function decorateArt(el,style)
 			 );		     	 		     
 		  }  else  {//apply stuff to whole div
 		     if (style[j].cls) setElementClass(el,style[j].cls,true);
-			 if (style[j].pFactor) { el.posPFactorX=el.posPFactorY=style[j].pFactor; el.outOfPlane=1; }
+			 if (style[j].pFactor) { el.posPFactorX=el.posPFactorY=style[j].pFactor; el.outOfPlane=1; }			 
 		  }
 	    list[i].innerHTML=text;
 	}	
@@ -88,9 +88,18 @@ function addSimpleArt(art,xOff,yOff,deco,repXCount,repYCount)
   el.posWidth=width;  
   el.innerHTML=html;
   el.posPFactorX=el.posPFactorY=1;
+  el.posPOffX=el.posPOffY=0
   if (art.deco) decorateArt(el,art.deco);
   if (deco) decorateArt(el,deco);
   el.tick=terrainTick; 
   return createGameObject(el);      
 }
 
+function addSkyArt(art,X,Y,maxP,deco,repX,repY)
+{
+	var el=addSimpleArt(art,100,-gS.terrainAlt+Y,deco,repX,repY);
+	el.posPFactorX=random(0,maxP);
+	el.posPFactorY=.8;
+	el.posPOffX=X;
+	return el;
+}

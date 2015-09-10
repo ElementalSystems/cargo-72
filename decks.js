@@ -52,7 +52,7 @@ var oC={
   base_out: function() { addSimpleArt(aW.base,0,0,[{pattern:"r+", replace:   " OUT-EYE-8    ", cls:"cBR"}],1,6); },
   base_dist: function() { addSimpleArt(aW.base,0,0,[{pattern:"r+", replace:  " DIST X19     ", cls:"cBR"}],16,2); },
   base_sky: function() { addSimpleArt(aW.ctower,0,0,[{ pattern: "1+", replace: "**SKY WTCH**", cls:"cBR"}]); addSimpleArt(aW.ctower,5,-2,[{ pattern: "1+", replace: "**SKY WTCH**", cls:"cBR"}],1,8);  },
-  base_fwd: function() { addSimpleArt(aW.ctower,-10,0,[{ pattern: "1+", replace: " #-#-#-#-#  ", cls:"cBR2"}],1,7); addSimpleArt(aW.ctower,0,0,[{ pattern: "1+", replace: " O-O-O-O-O  ", cls:"cBR"}],1,5); addSimpleArt(aW.ctower,10,0,[{ pattern: "1+", replace: "  X-X-X-X-X  ", cls:"cBR2"}],1,3); addSimpleArt(aW.base,30,0,[{pattern:"r+", replace:   " FWD-FRNT-7 ", cls:"cBR2"}],3,5);  },
+  base_fwd: function() { addSimpleArt(aW.ctower,-10,0,[{ pattern: "1+", replace: " #-#-#-#-#  ", cls:"cBR2"}],1,7); addSimpleArt(aW.ctower,0,0,[{ pattern: "1+", replace: " O-O-O-O-O  ", cls:"cBR"}],1,5); addSimpleArt(aW.ctower,10,0,[{ pattern: "1+", replace: "  X-X-X-X-X  ", cls:"cBR2"}],1,3); addSimpleArt(aW.base,30,0,[{pattern:"r+", replace:   " FWD-C22       ", cls:"cBR2"}],3,5);  },
   dome_t: function() { addSimpleArt(aW.dome,0,0,null,1,4); },
   mother: function() { addSimpleArt(aW.ctower,0,0,[{ pattern: "1+", replace: "**MOTHER-1**", cls:"cBR2"}]); addSimpleTerrain('_',20,1); addSimpleArt(aW.dome,0,0,null,8,3); addSimpleTerrain('_',70,1); addSimpleArt(aW.ctower,0,0,[{ pattern: "1+", replace: "**MOTHER-1**", cls:"cBR2"}]);},
   billboard_qa1: function() { addSimpleArt(aW.billboard,0,0,[{ pattern: "1+", replace: " QA: Yard Tests ", cls:"cBR"}]); },
@@ -62,24 +62,36 @@ var oC={
   loadingplatform_empty: function() {addSimpleArt(aW.platform,0,0); addLoadEvent(0,null,null,1); },
   loadingplatform_spare: function() {addSimpleArt(aW.platform,0,0); var el=addSimpleArt(aW.tank,0,2.5,[{ pattern:"1+", replace:"##-PARTS-##"}]); addLoadEvent(0,el,null,1); },
   loadingplatformo_fuel: function() {addSimpleArt(aW.platform,0,0); var el=addSimpleArt(aW.tank,0,2.5,[{ pattern:"1+", replace:"##-FUEL-##"}],8,3); addLoadEvent(0,el,null,0); },
+  loadingplatformo_ammo: function() {addSimpleArt(aW.platform,0,0); var el=addSimpleArt(aW.tank,0,2.5,[{ pattern:"1+", replace:"##-AMMO-##"}],8,3); addLoadEvent(0,el,null,0); },
+  loadingplatform_bomb: function() {addSimpleArt(aW.platform,0,0); var el=addSimpleArt(aW.bomb,0,2.5); addLoadEvent(0,el,null,1); },
+  loadingplatformo_bomb: function() {addSimpleArt(aW.platform,0,0); var el=addSimpleArt(aW.bomb,0,2.5); addLoadEvent(0,el,null,0); },
   loadingplatform_cage: function() {addSimpleArt(aW.platform,0,0); var el=addSimpleArt(aW.cage,0,2.5); addLoadEvent(0,el,null,0); },
   loadingplatform_cagecow: function() {addSimpleArt(aW.platform,0,0); var el=addSimpleArt(aW.cage,0,2.5); var el2=addSimpleArt(aW.cow,0,2.5); addLoadEvent(0,el,el2,1); },
+  loadingplatform_cagehuman: function() {addSimpleArt(aW.platform,0,0); var el=addSimpleArt(aW.cage,0,2.5); var el2=addSimpleArt(aW.human,0,2.5); addLoadEvent(0,el,el2,1); },
+  loadingplatformo_cagehuman: function() {addSimpleArt(aW.platform,0,0); var el=addSimpleArt(aW.cage,0,2.5); var el2=addSimpleArt(aW.human,0,2.5); addLoadEvent(0,el,el2,0); },
   
   jellyfish: function() { addActor(aW.jellyfish,jellyTick,0,10); },
   jellyfish_swarm: function() { for (var i=0; i<3;i+=1) addActor(aW.jellyfish,jellyTick,randomInt(0,20),randomInt(5,15),null,0,randomInt(2,8)); },
   
   cow: function() { addActor(aW.cow,cowTick,0,-1); },
   cow_s: function() { addActor(aW.cow,cowsTick,0,-1); },
-  battleship: function() { addSimpleArt(aW.battleship,0,-gS.terrainAlt+26); },
+  battleship: function() { addBattleThing(aW.battleship,26,battleshipTick) },
+  zeppelin: function() { addBattleThing(aW.zeppelin,45,zeppelinTick) },
+  robot: function() {  addSimpleArt(aW.robot,0,0,null,0,randomInt(1,6)); },
+  robot2: function() {  addSimpleArt(aW.robot,0,0,[{ cls:'cRB2'},{ pFactor: .95 }],0,randomInt(1,8)); },
+  human: function() {  addActor(aW.human,humanTick,0,0); },
   
   
   shallowsheet: function() { addEnvSheet(30,-50,'cSS'); }  ,
-  skysheet: function() { addEnvSheet(90,30,'cAS'); }  
+  skysheet: function() { addEnvSheet(90,30,'cAS'); } , 
+  
+  clouds: function() {  lim=randomInt(2,6); for (var i=0;i<lim;i+=1) addSkyArt(aW.clouds,randomInt(0,gS.widthInText-20),randomInt(40,70),.1,null,randomInt(1,6),randomInt(1,6)); },
+  sun: function() {  addSkyArt(aW.sun,randomInt(0,gS.widthInText/2),60,0); }
 };
 
 var eC={
-  moveInstruct: function() { addConsoleEvent(0,"LIVE-ENV QA Test: INIT"); addConsoleEvent(0,"Use <i>[A]</i> + <i>[D]</i> to control the buggy");   },
-  jumpInstruct: function() { addConsoleEvent(0,"Press [Space] to Jump");  },
+  moveInstruct: function() { addConsoleEvent(0,"LIVE-ENV QA Test: INIT"); addConsoleEvent(0,"Use [A] + [D] to move left or right","Hold near the left or right edges of the screen to move left or right.");   },
+  jumpInstruct: function() { addConsoleEvent(0,"Press [Space] or [W] to Jump","Tap the screen to Jump");  },
   dangerInstruct: function() { addConsoleEvent(0,"HAZ-INFO: Terrain Dangerous"); addConsoleEvent(0,"Danger zones can damage you.");  },
   reverseInstruct: function() { addConsoleEvent(1,"You are slower in reverse."); addConsoleEvent(1,"Some obstacles will be harder.");  },
   outInstruct: function() { addConsoleEvent(0,"ENV-INFO: In Atmospshere"); addConsoleEvent(0,"There is less drag out of water."); addConsoleEvent(0,"But gravity affects the you more."); },
@@ -90,22 +102,24 @@ var eC={
 
 
 var sets={
-	base_asm: [tC.block,oC.shallowsheet,oC.skysheet,tC.lev10,oC.base_asm,tS.hill2,tC.lev10,tS.hill,eC.missionCompleted,oC.buggy,tC.lev50,oC.tritower,tC.bump,tS.hill2,tC.lev10,tC.bump,tS.hill,tC.lev50,oC.tower,tC.lev10],
-	base_dist:[tC.block,oC.shallowsheet,oC.skysheet,tC.lev10,tC.lev20,oC.base_dist,tC.lev10,eC.missionCompleted,oC.buggy,tC.lev50,oC.tower,tC.bump2,tC.lev10],
+	base_asm: [tC.block,oC.shallowsheet,oC.skysheet,oC.clouds,oC.sun,tC.lev10,oC.base_asm,tS.hill2,tC.lev10,tS.hill,eC.missionCompleted,oC.buggy,tC.lev50,oC.tritower,tC.bump,tS.hill2,tC.lev10,tC.bump,tS.hill,tC.lev50,oC.tower,tC.lev10],
+	base_dist:[tC.block,oC.shallowsheet,oC.skysheet,oC.clouds,oC.sun,tC.lev10,tC.lev20,oC.base_dist,tC.lev10,eC.missionCompleted,oC.buggy,tC.lev50,oC.tower,tC.bump2,tC.lev10],
+	base_c22:[tC.block,oC.shallowsheet,oC.skysheet,oC.clouds,oC.sun,tC.tom40,tC.tom40,tC.lev20,tC.bump2,oC.base_fwd,tC.lev10,eC.missionCompleted,oC.buggy,tC.lev50],
 	
 	upto_island: [tC.softup,tC.softup,tC.to40],
 	downto_shallows: [tC.softdown,tC.to20,tC.softdown,tC.to20,tC.softdown],
 	upto_shallows: [tC.softup,tC.softup,tC.to20],
+	upto_0: [tC.softup,tC.to0,tC.softup,tC.to0],
 	downto_0: [tC.softdown,tC.to0,tC.softdown,tC.to0],
 	downto_deep: [tC.softdown,tC.softdown,tC.tom20,tC.softdown,tC.softdown,tC.tom40,tC.softdown,tC.tom40],
-	
+	   
 	dangerfloorm20: [tC.softup,tC.softdown,tC.dangerzone,tC.cliffup,tC.cliffdown,tC.tom20,tC.hill]
 };
 
 var levels=[
   { 
     title: 'QA: MARINE',
-	orders: ["Unit CARGO-72...Online...","SYS-CHK-SUM: OKAY","Status: Unit Ready","Proceed to Test Zone","Use [D] to move rightwards." ],
+	orders: ["Unit CARGO-72...Online...","SYS-CHK-SUM: OKAY","Status: Unit Ready","Proceed to Test Zone","Press [D] or touch the right hand side of the screen to move." ],
 	time:180,
     content: [
 	   { set: sets.base_asm  },
@@ -210,7 +224,7 @@ var levels=[
 	
 	content: [
 	   { set: sets.base_dist  },	   	   
-	   { set: sets.upto_shallows },
+	   { set: sets.upto_0 },
 	   { set: [tC.to20,tC.softdown,tC.level,oC.battleship,tC.level,tC.rise,tC.level] },
 	   { set: sets.dangerfloorm20 ,distance:100},	   	   
 	   { set: sets.upto_shallows },
@@ -230,8 +244,77 @@ var levels=[
 	   { set: [tC.lev50,tC.bump2,oC.base_fwd,eC.missionCompletedOW,tC.lev50,tC.lev20,tC.cliffup,tC.cliffup,tC.block] }
 	     
 	]
+  },
+  { 
+    title: 'C22: AMMO DUTY',
+    orders: ["Transport Ammunition to the front lines.","HAZ_INFO: Aggressive Organics (Armed)"],
+    time:180,
+	
+	content: [
+	   { set: sets.base_c22  },	
+	   { set: [tC.level,tS.hill2,oC.loadingplatformo_ammo,oC.robot2,tC.lev20,tC.rise] },	      	   
+	   { set: sets.upto_0 , distance:100 },
+	   { set: [tC.level,tC.softup,tC.rise,tC.lev20,tC.to0,oC.battleship], distance:250 },	   
+	   { set: sets.upto_island },
+	   { set:[tC.hill,tC.level,oC.zeppelin,tS.mountain,tS.mountain2,tC.level,tC.level,tC.field,tC.rise,tC.rough], distance:300},	   
+	   { set: [tC.lev50,tC.bump2,oC.robot,tC.lev20,oC.robot2,tC.level,oC.robot,oC.loadingplatform_empty,tC.lev20,tC.cliffup,tC.cliffup,tC.block] }	     
+	]
+  },
+  { 
+    title: 'C22: ABDUCTEES',
+    orders: ["Retreive Abducted Biologicals from Front.","HAZ_INFO: Aggressive Organics (Armed and organised)","HAZ_INFO: Night Conditions"],
+    time:180,
+	conditions: 'n',
+	content: [
+	   { set: sets.base_c22  },		      
+	   { set: sets.upto_0 , distance:100 },
+	   { set: [tC.level,tC.softup,tC.rise,tC.lev20,tC.to0,oC.battleship], distance:250 },	   
+	   { set: sets.upto_island },
+	   { set:[tC.hill,tC.level,oC.zeppelin,oC.zeppelin,oC.human,tS.mountain,tS.mountain2,tC.level,tC.hill,tC.level,tC.field,tC.rise,tC.rough], distance:300},	   
+	   { set: [tC.lev50,oC.robot2,tC.bump2,oC.robot,tC.lev20,oC.robot2,tC.level,oC.robot,tC.lev20,oC.loadingplatform_cagehuman,tC.lev20,tC.cliffup,tC.cliffup,tC.block] }	     
+	]
+  },
+  { 
+    title: 'C22: DO-SCIENCE',
+    orders: ["Transport abductees to MOTHER-1 for research","HAZ_INFO: Deep Zone roadway damaged","HAZ_INFO: Passive Biologicals"],
+    time:180,
+	content: [
+	   { set: sets.base_c22  },		      
+	   { set: [tC.level,tS.hill2,oC.loadingplatformo_cagehuman,tC.lev20,tC.rise,tC.softup,tC.softup] },	      	   
+	   { set: sets.upto_shallows , distance:100 },
+	   { set: sets.downto_deep, distance:100 },	   
+	   { set: [tC.softup,tC.softdown,tC.rise,tS.mountain,tS.mountain2,tS.mountain,tS.mountain2,tC.tom20,tC.hill,tC.dangerzone,tC.dangerzone,tC.dangerzone,tC.cliffup,oC.jellyfish_swarm,oC.jellyfish_swarm], distance: 500 },
+	   { set: [tC.softup,tC.softup,tC.softup,tC.softup,tC.to40,oC.zeppelin,tC.lev20,tC.level,tC.down,tC.softdown,tC.down,tC.lev50,oC.mother,tC.lev20,oC.loadingplatform_empty,tC.lev50,tC.block] }	   	   
+	]
+  },
+  { 
+    title: 'C22: FINAL-SOLUTION',
+    orders: ["Retreive weapon FS-18 from MOTHER-1","Caution: Cargo is Experimental Weapon","HAZ_INFO: Deep Zone roadway damaged","HAZ_INFO: Passive Biologicals","HAZ_INFO: Nighttime"],
+    time:180,
+	conditions: 'n',
+	content: [
+	   { set: sets.base_c22  },		      
+	   { set: sets.upto_shallows , distance:150 },
+	   { set: [tC.softdown,oC.battleship] },	   
+	   { set: sets.downto_deep, distance:100 },	   
+	   { set: [tC.softup,tC.softdown,tC.rise,tS.mountain,tS.mountain2,tS.mountain,tS.mountain2,tC.tom20,tC.hill,tC.dangerzone,tC.dangerzone,tC.dangerzone,tC.cliffup,oC.jellyfish_swarm,oC.jellyfish_swarm], distance: 500 },
+	   { set: [tC.softup,tC.softup,tC.softup,tC.softup,tC.to40,oC.zeppelin,tC.lev20,tC.level,tC.down,tC.softdown,tC.down,tC.lev50,oC.mother,tC.lev20,oC.loadingplatform_bomb,tC.lev50,tC.block] }	   	   
+	]
+  },
+  { 
+    title: 'C22: TOTAL VICTORY',
+    orders: ["Deliver FS-18 to the front lines..","HAZ_INFO: Aggressive Organics (Armed and organised)","STATUS: Success is critical to victory"],
+    time:180,
+	content: [
+	   { set: sets.base_c22  },	
+	   { set: [tC.bump2,oC.loadingplatformo_bomb,tC.lev20]},
+	   { set: sets.upto_0 , distance:100 },
+	   { set: [tC.level,tC.softup,tC.rise,tC.lev20,tC.to0,oC.battleship], distance:250 },	   
+	   { set: sets.upto_island },
+	   { set:[tC.hill,tC.level,oC.zeppelin,oC.zeppelin,oC.human,oC.human,oC.human,tS.mountain,tS.mountain2,tC.level,tC.hill,tC.level,tC.field,tC.rise,tC.rough], distance:600},	   
+	   { set: [tC.lev50,oC.robot2,tC.bump2,oC.robot,tC.lev20,oC.robot2,tC.level,oC.robot,tC.lev20,eC.missionCompletedOW,tC.lev20,tC.cliffup,tC.cliffup,tC.block] }	     
+	]
   }
-  
 
 ];
 

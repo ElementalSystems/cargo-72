@@ -81,9 +81,9 @@ function startConsole() {
   consoleTick();
 }
 
-function addConsoleEvent(direction,message)
+function addConsoleEvent(direction,message,tsmessage)
 {
-	addEvent(direction, function(){ addConsoleText(message);});
+	addEvent(direction, function(){ addConsoleText((controls.isTouch&&tsmessage)?tsmessage:message);});	
 }
 
 
@@ -100,11 +100,13 @@ function takeDamage(amount)
 
 function gainScore(text,amount)
 {
-	if (amount>0)
-	  addConsoleText("Score +"+amount.toFixed(0)+"("+text+")");
-    else
-	  addConsoleText("Score Penalty "+amount.toFixed(0)+"("+text+")");
-    	
+	if (text) {
+	  if (amount>0)
+	    addConsoleText("Score +"+amount.toFixed(0)+"("+text+")");
+      else
+	    addConsoleText("Score Penalty "+amount.toFixed(0)+"("+text+")");
+    }
+	
 	gS.score+=Math.floor(amount);
 	scoreConsole.innerHTML="SCORE "+gS.score;
 }
