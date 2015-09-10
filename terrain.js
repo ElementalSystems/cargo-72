@@ -38,7 +38,7 @@ function addCurvedTerrain(width,height,add,deco,curvefunc)
 function createTerrainObject(deco,deco2)
 {
   //add an extra 10 on the bottom
-  gS.terrainAltMin-=20;
+  gS.terrainAltMin-=50;
   var height=Math.floor(gS.terrainAltMax-gS.terrainAltMin+1);
   var el=document.createElement('DIV');
   var width=gS.terrainEnd-gS.terrainStart;

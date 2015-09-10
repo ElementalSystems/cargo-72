@@ -7,6 +7,13 @@ body {
 	white-space: pre;
 	background: #000;
   overflow: hidden;
+  font-size: 20px;  
+}
+
+@media ( max-height: 601px ){
+  body {
+	  font-size: 15px;  
+  }
 }
 
 #iGS {
@@ -15,8 +22,8 @@ body {
   bottom:0;
   left: 0;
   right:0;
+  
   overflow: hidden;
-  font-size: 15pt;
   background: #888;  
   transform: scaleY(0.001);
   transition: top 3s, transform 2s ease;  
@@ -44,6 +51,7 @@ transform: scaleY(1);
 	border-radius: .5em;
 	border: 2px solid rgba(0,255,0,.6);
 	transition: top 2s;
+	font-size: 80%;
 }
 
 
@@ -62,22 +70,25 @@ body.play  #iTT {
 	left:.5em;
 	right:-1em;
 	top: -.3em;
-	font-size: 200%;
+	font-size: 150%;
     transition: left 5s, font-size 5s;
 	z-index: 1001;
 }
 
 
 body.play  #iTC {
-	left: 22em;
-    font-size: 100%;
+	left: 19em;    
+	font-size: 100%;    
 }
-
 
 #iTC a 
 {
    color: 	#8F8;
    text-decoration: none;
+}
+
+#iTC a.l 
+{
    border: 1px solid #050 ;
    border-radius: 3px;   
 }
@@ -226,7 +237,7 @@ div.cAS {  /* sky/air sheet */
 
 /*the Avatar Buggy*/
 div.cAB { 
-  font-size:7pt;
+  font-size:46%;
   color: #FD2;
   
   transform-origin: 50% 100%;
@@ -240,7 +251,7 @@ span.cAS {
 
 /*the Avatar wheels*/
 div.cAW { 
-  font-size:5pt;
+  font-size:33%;
   color: #000;
   font-weight: bold;
   transform-origin: 50% 50%;
@@ -261,7 +272,7 @@ span.cWH{
 
 /*Buildings*/
 div.cBB { 
-  font-size:10pt;
+  font-size:66%;
   color: #44A;
   z-index:85;
 }
@@ -304,7 +315,7 @@ span.cBR2 {
 
 /* tanks and cargo */
 div.cCT { 
-  font-size:8pt;
+  font-size: 54%;
   z-index:99;
   
   transform-origin: 0% 100%;
@@ -328,7 +339,7 @@ div.cCC {  /*cargo cage*/
 /*life*/
 div.cAL {
 	color:#FFF;
-	font-size:7px;
+	font-size:46%;
 	z-index: 120;
 }
 
@@ -338,7 +349,7 @@ div.cAL span.cLS {
 
 div.cLL {
 	color:#000;
-	font-size:14px;
+	font-size:93%;
 	z-index: 90;
 	transform-origin: 0% 100%;
 }

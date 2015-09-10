@@ -224,11 +224,11 @@ function mainMenu()
   addConsoleText("CARGO-72\n");
   addConsoleText("..an invasion is only as\n    good as its supply line..\n");
   
-  addConsoleText("<a onclick='start(0,1)' href='#'>[Play from Start]</a>\n");  
-  addConsoleText("<a onclick='start(3,1)' href='#'>[Play from DIST-X19]</a>\n");  
-  addConsoleText("<a onclick='start(8,1)' href='#'>[Play from FWD-C22]</a>\n");  
-  addConsoleText("a game by elementalsystems for twelvegamesayear\n");  
-
+  addConsoleText("<a class=l onclick='return start(0,1)' href='#'>[Play from Start]</a>\n");  
+  addConsoleText("<a class=l onclick='return start(3,1)' href='#'>[Play from DIST-X19]</a>\n");  
+  addConsoleText("<a class=l onclick='return start(8,1)' href='#'>[Play from FWD-C22]</a>\n");  
+  addConsoleText("a game by <a href='http://www.elementalsystems.co.za/'>elementalsystems</a> for <a href='http://twelvegamesayear.blogspot.co.za/'>twelvegamesayear</a>\n");  
+  return false;
 }
 
 function endGame(win)
@@ -247,12 +247,12 @@ function endGame(win)
 		gainScore("Damage bonus",lScore*(1-gS.avatar.damage/100));
 	  
 	  addConsoleText("\nCurrent Score "+gS.score);
-	  addConsoleText("\n<a href='#' onclick='start("+(gS.levelNumber+1)+",0)'>[DOWNLOAD NEW TASK]</a>");		
+	  addConsoleText("\n<a href='#' onclick='return start("+(gS.levelNumber+1)+",0);'>[DOWNLOAD NEW TASK]</a>");		
 	} else {
 	  setConsoleState(0,["Task "+gS.level.title+" :: FAILED"]);
 	  addConsoleText("Final Score "+gS.score);
-	  addConsoleText("\n<a href='#' onclick='mainMenu()'>[MAIN MENU]</a>");		
-	  addConsoleText("\n<a href='#' onclick='start("+gS.levelNumber+",1)'>[RESTART FROM "+gS.level.title+"]</a>");				
+	  addConsoleText("\n<a href='#' onclick='return mainMenu(); '>[MAIN MENU]</a>");		
+	  addConsoleText("\n<a href='#' onclick='return start("+gS.levelNumber+",1);'>[RESTART FROM "+gS.level.title+"]</a>");				
 	}
 }
 
