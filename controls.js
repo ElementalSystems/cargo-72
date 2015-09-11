@@ -53,10 +53,15 @@ var controls={
 }
 
 function bindControls(el) {
+  controls.touchl.start=controls.touchl.startUp=-1000;
+  controls.touchl.down=0;
+  controls.touchr.start=controls.touchr.startUp=-1000;
+  controls.touchr.down=0;
+  
   el.onkeydown=function(evt) { controls.keyEvent(evt.keyCode,1);  };
   el.onkeyup=function(evt) { controls.keyEvent(evt.keyCode,0);  };
-  //el.ontouchstart=function(evt) { evt.preventDefault(); controls.touch(evt.changedTouches,1); return false; }
-  //el.ontouchend=function(evt) { evt.preventDefault(); controls.touch(evt.changedTouches,0); return false; }
+  el.ontouchstart=function(evt) { evt.preventDefault(); controls.touch(evt.changedTouches,1); return false; }
+  el.ontouchend=function(evt) { evt.preventDefault(); controls.touch(evt.changedTouches,0); return false; }
   controls.width=window.innerWidth;
   el.focus();
   

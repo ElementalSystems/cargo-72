@@ -221,7 +221,7 @@ function measureTheWorld()
 function mainMenu()
 {
   setConsoleState(0);
-  addConsoleText("CARGO-72(2)");
+  addConsoleText("CARGO-72(3)");
   addConsoleText("..an invasion is only as\n    good as its supply line..\n");
   
   addConsoleText("<a class=l onclick='return start(0,1)' href='#'>[Play from Start]</a>\n");  
