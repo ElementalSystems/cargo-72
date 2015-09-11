@@ -218,13 +218,13 @@ function measureTheWorld()
 	
 }
 
-function mainMenu()
+window['mainMenu']=function mainMenu()
 {
   setConsoleState(0);
   addConsoleText("CARGO-72");
   addConsoleText("..an invasion is only as\n    good as its supply line..\n");
   
-  addConsoleText("<a class=l onclick='return start(0,1)' href='javascript:void(0);'>[Play from Start]</a>\n");  
+  addConsoleText("<a class=l onclick='start(0,1)' href='javascript:void(0);'>[Play from Start]</a>\n");  
   addConsoleText("<a class=l onclick='return start(3,1)' href='javascript:void(0);'>[Play from DIST-X19]</a>\n");  
   addConsoleText("<a class=l onclick='return start(8,1)' href='javascript:void(0);'>[Play from FWD-C22]</a>\n");  
   addConsoleText("a game by <a href='http://www.elementalsystems.co.za/'>elementalsystems</a> for <a href='http://twelvegamesayear.blogspot.co.za/'>twelvegamesayear</a>\n");  
@@ -251,8 +251,8 @@ function endGame(win)
 	} else {
 	  setConsoleState(0,["Task "+gS.level.title+" :: FAILED"]);
 	  addConsoleText("Final Score "+gS.score);
-	  addConsoleText("\n<a href='javascript:void(0);' onclick='return mainMenu()'>[MAIN MENU]</a>");		
-	  addConsoleText("\n<a href='javascript:void(0);' onclick='return start("+gS.levelNumber+",1)'>[RESTART FROM "+gS.level.title+"]</a>");				
+	  addConsoleText("\n<a href='javascript:void(0);' onclick='mainMenu()'>[MAIN MENU]</a>");		
+	  addConsoleText("\n<a href='javascript:void(0);' onclick='start("+gS.levelNumber+",1)'>[RESTART FROM "+gS.level.title+"]</a>");				
 	}
 }
 
