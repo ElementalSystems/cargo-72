@@ -235,6 +235,8 @@ function endGame(win)
 {
 	gS.endGame=1;
 	gS.avatar.endGame();
+	var hi=localStorage.getItem('cargohi');
+	if (!hi) hi=0;
 	if (win) {	  
 	  setConsoleState(0,["Task "+gS.level.title+" :: Complete\n"]);
 	  var lScore=gS.levelNumber*1000+500;
@@ -247,13 +249,21 @@ function endGame(win)
 		gainScore("Damage bonus",lScore*(1-gS.avatar.damage/100));
 	  
 	  addConsoleText("\nCurrent Score "+gS.score);
-	  addConsoleText("\n<a href='javascript:void(0);' onclick='return start("+(gS.levelNumber+1)+",0);'>[DOWNLOAD NEW TASK]</a>");		
+	  addConsoleText("\nHigh Score "+hi);
+	  if (gS.levelNumber==12) {
+		 addConsoleText("\nGAME COMPLETED!!!");	  
+	     addConsoleText("\n<a href='javascript:void(0);' onclick='mainMenu()'>[MAIN MENU]</a>");		
+	  }  else
+	    addConsoleText("\n<a href='javascript:void(0);' onclick='return start("+(gS.levelNumber+1)+",0);'>[DOWNLOAD NEW TASK]</a>\n");		
 	} else {
 	  setConsoleState(0,["Task "+gS.level.title+" :: FAILED"]);
 	  addConsoleText("Final Score "+gS.score);
+	  addConsoleText("\nHigh Score "+hi);
+	  
 	  addConsoleText("\n<a href='javascript:void(0);' onclick='mainMenu()'>[MAIN MENU]</a>");		
 	  addConsoleText("\n<a href='javascript:void(0);' onclick='start("+gS.levelNumber+",1)'>[RESTART FROM "+gS.level.title+"]</a>");				
 	}
+	if (gS.score>hi) localStorage.setItem('cargohi',gS.score);	
 }
 
 function addWinGameEvent(direction)

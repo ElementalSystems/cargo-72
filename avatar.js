@@ -98,7 +98,7 @@ function avatarTick()
 	if ((this.traction>0)&&(this.jumpReqTime>0)) {
 		this.velY+=20;
 		aud.playSlide(100,1600,.5,.2,0.01,.1,'sine');  
-		this.jumpReqTime=0;
+        this.jumpReqTime=0;
 	}
 	this.jumpReqTime-=gS.frameTime;
 	  
@@ -126,9 +126,7 @@ function avatarTick()
 		  this.cargo2.posBottom=y;
 	      this.cargo2.style.transform="rotate("+this.angle.toFixed(3)+"rad)";		  		
 		}
-	}
-	
-	
+	}	
 	
     //calculate new velocities
 	this.velX+=(this.wheelPower*this.traction*fwxc-gS.drag*this.traction*this.velX+this.traction*fwxs*gS.gravity)*gS.frameTime/1000; 
@@ -146,20 +144,16 @@ function avatarTick()
 	
 	//modify the sound
 	var t=aud.ctx.currentTime+0.1;		
-	if (this.traction) {
+	if (this.traction)
 		if (this.absspeed>1) {
 			if (this.wheelPower!=0)
-		      this.engineSound.gain.linearRampToValueAtTime(1, t);
-		    else
-			  this.engineSound.gain.linearRampToValueAtTime(.5, t);
-		   this.engineSound.freq.linearRampToValueAtTime(80+this.absspeed*2, t);		   
+			  this.engineSound.gain.linearRampToValueAtTime(2, t);
+			else
+			  this.engineSound.gain.linearRampToValueAtTime(1, t);
+			this.engineSound.freq.linearRampToValueAtTime(80+this.absspeed*2, t);		   
 		} else {
-		   this.engineSound.gain.linearRampToValueAtTime(0, t);
+		  this.engineSound.gain.linearRampToValueAtTime(0, t);
 		}
-	} else {
-		//this.engineSound.gain.linearRampToValueAtTime(.2, t);
-		//this.engineSound.freq.linearRampToValueAtTime(70, t);
-	}
 		
 }
 

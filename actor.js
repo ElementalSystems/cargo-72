@@ -41,47 +41,41 @@ function jellyTick()
 
 
 
-function cowsTick()
+
+
+function killMe(el,x,y,dam,turndam)
 {
-  if (!this.dead) 
-	  randomDrift(this,.1,1,-2.5,-1.5,4000);  
-		
-  //also hurt him if I must
-  if (isCollision(this,5,3)) {
-		if (this.dead)
-	      takeDamage(15*gS.frameTime/1000)
+  if (isCollision(el,x,y)) {
+		if (el.dead)
+	      takeDamage(turndam*gS.frameTime/1000)
 	    else {
-		  this.dead=1;
-		  
+		  el.dead=1;
+		  setElementClass(el,'d',1); //CSSS mark it as dead
+		  aud.playnote(200,3,.1,.1,.5);						
 		  gS.avatar.velX=0;
 		  gS.avatar.velY=0;
-		  gainScore("Killed Native Fauna",-200);
-		  takeDamage(20);
-		}
-		  
-  }
-	  
+		  gainScore("Hit Native Fauna",-200);
+		  takeDamage(dam);		  
+		}		  
+  }	  	
 }
 
 function cowTick()
 {
   if (!this.dead) 
 	  randomDrift(this,5,.2,-2,-.5,500);  
-	
-	
-  //also hurt him if I must
-  if (isCollision(this,5,3)) {
-		if (this.dead)
-	      takeDamage(15*gS.frameTime/1000)
-	    else {
-		  this.dead=1;
-		  gS.avatar.velX=0;
-		  gS.avatar.velY=0;
-		  takeDamage(20);
-		  gainScore("Hit Native Fauna",-200);
-		}		  
-  }	  
+		
+  killMe(this,5,3,15,20);
+  	  
 }
+
+function cowsTick()
+{
+  if (!this.dead) 
+	  randomDrift(this,.1,1,-2.5,-1.5,4000);  
+  killMe(this,5,2,15,20);	  
+}
+
 
 function addBattleThing(art,y,tickfunc)
 {
@@ -95,10 +89,9 @@ function addBattleThing(art,y,tickfunc)
 
 function humanTick()
 {
-  randomDrift(this,5,.1,0,.5,1000);  
-  //also hurt him if I must
-  if (isCollision(this,5,3)) 
-		  takeDamage(15*gS.frameTime/1000);	    		   	  
+  if (!this.dead)
+    randomDrift(this,5,.1,-.25,0,1000);  
+  killMe(this,5,3,10,10);	  
 }
 
 
@@ -159,6 +152,7 @@ function ammoTick()
 				this.explodeEnd=gS.gameTime+250;
 				this.explode=1;
 				setElementClass(this,'x',1);
+				aud.playSlide(200,800,3,.1,.01,.4,'sine');  			  			  
 			  }
 		}
 	}

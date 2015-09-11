@@ -353,8 +353,16 @@ div.cLL {
 	transform-origin: 0% 100%;
 }
 
+div.cLL.d {
+	transform: rotate(35deg);
+}
+
 div.cLL span.cLS {
   background: rgba(255,255,255,1);
+}
+
+div.cLL.d span.cLS {
+  background: rgba(255,0,0,1);
 }
 
 
@@ -450,9 +458,20 @@ div.cHS {/* human Soldiers*/
   transform-origin: 10% 100%;
 }
 
+div.cHS.d {
+  transform: rotate(+20deg);
+}
+
 span.cHU {
-	background: #050;
-	
+	background: #050;	
+}
+
+span.cHF {
+	background: #FFA;	
+}
+
+div.cHS.d span.cHF {
+	background: #F55;	
 }
 
 div.cFS {/* final solution bomb*/
