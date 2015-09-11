@@ -10,7 +10,7 @@ body {
   font-size: 20px;  
 }
 
-@media ( max-height: 601px ){
+@media ( max-height: 550px ){
   body {
 	  font-size: 15px;  
   }
@@ -32,8 +32,7 @@ body {
 
 body.play #iGS {
 top:0;
-transform: scaleY(1);
-  
+transform: scaleY(1);  
 }
 
 #iMM {
@@ -47,10 +46,10 @@ transform: scaleY(1);
 	z-index: 1000;
 	background: rgba(0,0,0,.6);
 	color:#0F0;
-	padding: .3em 1em .3em 1em;
+	padding: .1em .5em;
 	border-radius: .5em;
 	border: 2px solid rgba(0,255,0,.6);
-	transition: top 2s;
+	transition: top 5s;
 	font-size: 80%;
 }
 
@@ -58,27 +57,27 @@ transform: scaleY(1);
 #iTT {
 	left:.5em;
 	top: -3em;
-    width: 19em;	
-	transition: top 2s;
+    width: 14em;	
+	transition: top 3s;
 }
 
 body.play  #iTT {
-	top: -.3em;    
+	top: 0em;    
 }
 
 #iTC {
 	left:.5em;
-	right:-1em;
-	top: -.3em;
+	right:-10em;
+	top: 0em;
 	font-size: 150%;
-    transition: left 5s, font-size 5s;
+    transition: left 3s, font-size 3s;
 	z-index: 1001;
 }
 
 
 body.play  #iTC {
-	left: 19em;    
-	font-size: 100%;    
+	left: 17em;    
+	font-size: 80%;    
 }
 
 #iTC a 
@@ -104,7 +103,7 @@ body.play  #iTC {
 #iSC {
 	left:.5em;	
 	top: -3em;
-	width: 8em;
+	width: 7em;
 }
 
 body.play  #iSC {
@@ -113,9 +112,9 @@ body.play  #iSC {
 
 
 #iCC {
-	left:11.5em;	
+	left:9em;	
 	top: -3em;
-	width: 8em;
+	width: 5.5em;
 }
 
 body.play  #iCC {
@@ -125,13 +124,13 @@ body.play  #iCC {
 #iDC {
 	left: .5em;
 	top: -3em;
-	width:19em;
+	width:14em;
 	text-align:center;
 }
 
 
 body.play  #iDC {
-	top: 4.3em;    
+	top: 4em;    
 }
 
 #iDI {
