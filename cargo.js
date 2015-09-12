@@ -173,7 +173,7 @@ function tick(timestamp)
 	
     //figure out the camera
     gS.xOffset=-gS.avatar.posLeft+gS.widthInText/2+gS.drift;
-    gS.yOffset=-gS.avatar.posBottom+(gS.heightInText)/2-4;
+    gS.yOffset=-gS.avatar.posBottom+(gS.heightInText)/2.5;
 
 	
 	if ((gS.eQueueID==0)&&(gS.eQueue[0].length>0)) 

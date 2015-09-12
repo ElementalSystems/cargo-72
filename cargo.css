@@ -248,6 +248,7 @@ span.cAS {
 }
 
 
+
 /*the Avatar wheels*/
 div.cAW { 
   font-size:33%;
@@ -283,6 +284,20 @@ span.cBS {
 span.cBW { 
   color: #AAF;
 }
+
+@keyframes flash {
+  0% { color: #225; }
+  10% { color: #FFF; }
+  50% { color: #FFF; }
+  60% { color: #0CF; }
+  90% { color: #0CF; }
+  100% { color: #225; }  
+}
+
+span.cBF { 
+  animation: flash 1s infinite;
+}
+
 
 span.cBT { 
   color: #00B;
@@ -381,6 +396,12 @@ div.cMM {
 	font-size:120%;
 	z-index: 90;	
 }
+
+div.cMM.cMX {
+	z-index: 78;
+    transform: rotate(-60deg);	
+}
+
 
 span.cMS {
   background: rgba(64,64,64,1);

@@ -25,11 +25,13 @@ var aS={
   building: [
     { pattern: "(\\S+ {0,5})*\\S", cls: "cBS" }, 
 	{ pattern: "\\*.+\\*", cls: "cBT" }, 
-	{ pattern: "[\\[\\]oO]+", cls: "cBW" }
+	{ pattern: "[\\[\\]oO]+", cls: "cBW" },
+	{ pattern: "v", cls: "cBF" }
   ],
   building2: [
     { pattern: "(\\S+ {0,5})*\\S", cls: "cBS2" }, 	
-	{ pattern: "[\\[\\]oO]+", cls: "cBW2" }
+	{ pattern: "[\\[\\]oO]+", cls: "cBW2" },
+	{ pattern: "v", cls: "cBF" }
   ],
   
   aqualife: [
@@ -83,7 +85,7 @@ var aW={
   },
   
   tower: {
-	  l:[  "     |    ",
+	  l:[  "     v   ",
 	       " +===+===+",
 		   "<| [] [] |>",
 		   " +===+===+",
@@ -106,7 +108,7 @@ var aW={
 	       "****************",
 	       "*rrrrrrrrrrrrrr*",
 	       "****************",
-		   "X              X",
+		   "X              X    v",
 	       "+==============+====+",
 		   "| []   []   []   [] |",
 		   "|'''''''''''''''''''|",
@@ -151,7 +153,8 @@ var aW={
   },
   
   platform: {
-	  l:[  
+	  l:[   
+	       "v v",
 	       "T=T",
 	       "| |",
 	       "| |",
@@ -160,17 +163,16 @@ var aW={
 	  ],	  
 	  cls: "cBB",
 	  deco: aS.building,
-      repXStart: 1, repXEnd: 1, repXCount: 12	  	  
-	  
+      repXStart: 1, repXEnd: 1, repXCount: 12	  	  	  
   },
   
   dome: {
 	  l:[  
-	      "        !       ",
+	      "        v       ",
           "     _.-^-._    ",
           "  .-'   O   '-. ",
           " / O.  -O-  .O \\",
-          "/_______________\\",
+          "/_____v___v_____\\",
 		  "       | |       " ,
 		  " ||||||||||||||||"  
      ],	  
@@ -181,7 +183,7 @@ var aW={
   },
   ctower: {
 	  l:[  
-	      "     _.-^-._    ",
+	      "    v_.-^-._v   ",
           "  .-'   O   '-. ",
           " -111111111111-",
           "  '-.   O   .-' ",

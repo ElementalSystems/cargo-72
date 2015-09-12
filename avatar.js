@@ -97,6 +97,8 @@ function avatarTick()
 		
 	if ((this.traction>0)&&(this.jumpReqTime>0)) {
 		this.velY+=20;
+		if (this.velY<15) this.velY=15;
+		if (this.velY>30) this.velY=30;		
 		aud.playSlide(100,1600,.5,.2,0.01,.1,'sine');  
         this.jumpReqTime=0;
 	}
